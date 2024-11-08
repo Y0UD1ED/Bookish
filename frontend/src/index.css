@@ -1,0 +1,430 @@
+/*Обнуление*/
+*{padding:0;margin:0;border:0;}
+*,*:before,*:after{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box;}
+:focus,:active{outline:none;}
+a:focus,a:active{outline:none;}
+nav,footer,header,aside{display:block;}
+html,body{height:100%;width:100%;font-size:100%;line-height:1;font-size:14px;-ms-text-size-adjust:100%;-moz-text-size-adjust:100%;-webkit-text-size-adjust:100%;}
+input,button,textarea{font-family:inherit;}
+input::-ms-clear{display:none;}
+button{cursor:pointer;}
+button::-moz-focus-inner{padding:0;border:0;}
+a,a:visited{text-decoration:none;}
+a:hover{text-decoration:none;}
+ul li{list-style:none;}
+img{vertical-align:top;}
+h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit;}
+/*--------------------*/
+
+
+@import url('https://fonts.googleapis.com/css2?family=Monda:wght@400..700&display=swap');
+
+.wrapper{
+    font-family: "Monda", sans-serif;
+    font-weight: 400;
+    min-height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+}
+
+.content{
+    flex: 1 1 auto;
+
+}
+
+.container{
+    max-width: 1360px;
+    margin: 0 auto;
+}
+
+.pagecontainer{
+  padding-top: 80px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+
+.backLayout {
+  background: linear-gradient(rgba(51, 86, 150, 0.85), rgba(51, 86, 150, 0.85)),
+    url('/public/mainBackground.jpg');
+/* Устанавливаем цвет фона */
+/* Замените на путь к вашему изображению */
+background-size: cover; /* Изображение будет покрывать весь контейнер */
+background-position: center; /* Центрируем изображение */
+height: 100vh; /* Высота на весь экран */
+
+
+}
+
+
+.buttons{
+  font-size: 20px;
+  text-align: center;
+}
+
+.buttons p{
+  cursor: pointer;
+}
+
+.title{
+  margin-bottom: 28px;
+}
+
+input{
+  font-size: 18px;
+  padding: 12px 21px;
+  border-radius: 17px;
+  border: 1px black solid;
+}
+
+a{
+  font-family: "Monda", sans-serif;
+  color: black;
+  font-size: 16px;
+}
+
+input::placeholder{
+  color: #9B9898;
+}
+
+
+.func_btn{
+  display: inline-block;
+  padding: 17px 41px;
+  border-radius: 30px;
+  text-align: center;
+  font-size: 20px;
+  background: #335696;
+  color: white;
+  cursor: pointer;
+}
+
+
+
+.input_wrapper{
+  display: flex;
+  gap: 80px;
+}
+
+.checkbox_wrapper{
+  display: flex;
+  gap: 5px;
+}
+
+.checkbox_label{
+  display: flex;
+}
+
+label{
+  font-size: 16px;
+}
+
+.radio_wrapper label{
+  font-size: 18px;
+}
+
+.radio_wrapper{
+  display: flex;
+  font-size: 16px;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+
+input[type='radio'] {
+  width: 24px; /* Устанавливаем нужную ширину */
+  height: 24px; /* Устанавливаем нужную высоту */
+  border-radius: 50%; /* Делаем элемент круглым */
+  accent-color: #041d47;
+}
+
+input[type='checkbox']{
+  width: 20px;
+  height: 20px;
+}
+
+
+
+.back_btn{
+  display: inline-block;
+  padding: 17px 41px;
+  border-radius: 30px;
+  text-align: center;
+  font-size: 20px;
+  background: #9B9898;
+  color: white;
+  cursor: pointer;
+}
+
+.button_row{
+  display: flex;
+  gap: 15px;
+}
+
+.navbar{
+  position: fixed;
+  width: 100%;
+  top: 0;;
+}
+
+.menu{
+  
+  background: #335696;
+  min-width: 100%;
+  min-height: 50px;
+}
+
+.menu li:nth-child(1){
+  float: right;
+  font-size: 18px;
+  color: #FFFEFE;
+
+  cursor: pointer;
+}
+
+
+.menu_top a{
+  float: right;
+  font-size: 18px;
+  color: #FFFEFE;
+  padding: 16px 16px;
+
+}
+
+.menu_logo{
+  float: left;
+  cursor: pointer;
+  margin-left: 20px;
+}
+
+
+.menu_logo img{
+  width: auto;
+  height: 47px;
+}
+
+.menu_top a:hover{
+  background: #045270;
+}
+
+.notif_icon{
+  float: right;
+  cursor: pointer;
+  margin-top: 7px;
+}
+
+.notif_icon img{
+  width: 35px;
+  height: auto;
+}
+
+.footer{
+  margin-top: 4px;
+  margin-bottom: 100px;
+}
+
+.footer_row{
+  display: flex;
+  padding-top: 24px;
+  gap: 37px;
+  justify-content: center
+}
+
+.just_line{
+  border: 1px #D9D9D9 solid;
+}
+
+
+
+.footer_row a{
+  text-decoration: underline;
+}
+
+.blue_button{
+  display: inline-flex;
+  padding: 10px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  background: #E3EDFF;
+  color: #335696;
+}
+
+.delete_button{
+  display: inline;
+  color: red;
+  cursor: pointer;
+}
+
+.object_container{
+  font-size: 16px;
+}
+
+.object_row{
+  display: flex;
+  justify-content: space-between;
+}
+
+.object_img img{
+  width: 85%;
+  height: auto;
+}
+
+.object_info{
+  display: flex;
+  gap: 15px;
+}
+
+.object_text{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 26px;
+}
+
+.object_btns{
+  padding-top: 18px;
+}
+
+.object_btns_col{
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  gap: 13px;
+}
+
+
+.object_name{
+  font-weight: bold;
+}
+
+.objects_list{
+  padding: 0px 12px;
+  display: flex;
+  gap: 33px;
+}
+
+.lists_row{
+  display: flex;
+  flex-direction: column;
+  gap: 57px;
+}
+
+.list_title{
+  padding-bottom: 28px;
+}
+
+.list_title_row{
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 10px;
+}
+
+.list_title_text{
+  font-size: 27px;
+}
+
+.list_title_btns{
+  display: flex;
+  padding-top: 2px;
+  gap: 16px;
+}
+
+.darkblue_button{
+  display: inline-flex;
+  font-size: 16px;
+  padding: 9px 35px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  cursor: pointer;
+  background: #335696;
+  color: white;
+}
+
+.round_item_col{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+}
+
+.round_item{
+  cursor: pointer;
+}
+
+.round_item:hover{
+  background: #E3EDFF;
+}
+
+.round_item_name{
+  max-width: 125px;
+  text-align: center;
+}
+
+.round_item_img img{
+  width: 125px;
+  height: 125px;
+  border-radius: 50%;
+}
+
+.book_item{
+  cursor: pointer;
+}
+
+.book_item:hover{
+  background: #E3EDFF;
+}
+
+
+.book_item_col{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+}
+
+.book_item_name{
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  max-width: 125px;
+  text-align: center;
+}
+
+.book_item_author{
+  color: #968C8C;
+}
+
+.book_item_img img{
+  width: 125px;
+  height: 176px;
+}
+
+.progress_item{
+  cursor: pointer;
+}
+
+.progress_item_col{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px 6px 3px 6px;
+  gap: 7px;
+}
+
+.progress_item:hover{
+  background: #E3EDFF;
+}
+
+.progress_item_name{
+  max-width: 125px;
+  text-align: center;
+}
+
+

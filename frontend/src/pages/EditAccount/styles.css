@@ -1,0 +1,65 @@
+
+.edit_account_wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.edit_account_col{
+    display: flex;
+    gap: 35px;
+    flex-direction: column;
+    align-items: end;
+    text-align: center;
+    justify-content: center;
+}
+
+.edit_account_img{
+    display: flex;
+    width: 100%;
+    gap: 10px;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.edit_account_input_row{
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    justify-content: center;
+    gap: 35px;
+}
+
+.edit_account_input_item{
+    display: flex;
+    gap: 15px;
+    text-align: center;
+    align-items: center;
+}
+
+.edit_account_input_item input{
+    width: 305px;
+    font-size: 18px;
+    padding: 6px 24px;
+    border-radius: 10px;
+    border: none;
+    background: #F2ECEC;
+}
+
+
+.edit_account_btns{
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+    align-items: end;
+}
+
+.edit_account_btns_row{
+    display: flex;
+    gap: 34px;
+}
