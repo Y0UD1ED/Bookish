@@ -1,14 +1,24 @@
+import { useState } from "react";
 import Footer from "../../components/Footer";
 import Navbar from "../../components/Navbar"
 import BlueButton from "../../components/buttons/BlueButton"
 import DarkBlueButton from "../../components/buttons/DarkBlueButton"
 import DeleteButton from "../../components/buttons/DeleteButton";
 import './styles.css'
+import AddClassPopup from "../../components/popups/AddClassPopup";
+import AddPersonalBookPopup from "../../components/popups/AddPersonalBookPopup";
+import GiveModerationDecisionPopup from "../../components/popups/GiveModerationDecisionPopup";
+import CreateShelfPopup from "../../components/popups/CreateShelfPopup";
+import AddSomeBookInShelfPopup from "../../components/popups/AddSomeBookInShelfPopup";
+import DeleteAccountPopup from "../../components/popups/DeleteAccountPopup";
+
 
 const EditAccount=()=>{
+    const [isShowDelete,setShowDelete]=useState(false)
     return(
         <div className="edit_account">
              <Navbar/>
+             <AddSomeBookInShelfPopup isShow={isShowDelete} onClose={()=>setShowDelete(false)}/>
             <div className="pagecontainer">
                 <div className="edit_account_wrapper">
                
@@ -54,7 +64,7 @@ const EditAccount=()=>{
                         <DarkBlueButton btnText={"Отмена"}/>
                         <BlueButton btnText={"Сохранить изменения"}/>
                         </div>
-                        <DeleteButton btnText={"Удалить аккаунт"}/>
+                        <DeleteButton btnText={"Удалить аккаунт"} onClickFunc={()=>setShowDelete(true)}/>
                     </div>
                 </div>
                 </div>

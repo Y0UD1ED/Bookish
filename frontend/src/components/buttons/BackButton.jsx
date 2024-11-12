@@ -1,8 +1,8 @@
 
 
-const BackButton=()=>{
+const BackButton=({onClickFunc})=>{
     return(
-        <p className="back_btn">Назад</p>
+        <p className="back_btn" onClick={()=>onClickFunc()}>Назад</p>
     )
 }
 

@@ -92,7 +92,10 @@ input::placeholder{
 
 
 .func_btn{
-  display: inline-block;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
   padding: 17px 41px;
   border-radius: 30px;
   text-align: center;
@@ -102,7 +105,19 @@ input::placeholder{
   cursor: pointer;
 }
 
-
+.func_hint_btn{
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding-left:21px;
+  border-radius: 30px;
+  text-align: center;
+  font-size: 20px;
+  background: #335696;
+  color: white;
+  cursor: pointer;
+}
 
 .input_wrapper{
   display: flex;
@@ -116,6 +131,7 @@ input::placeholder{
 
 .checkbox_label{
   display: flex;
+  padding-top: 2px;
 }
 
 label{
@@ -165,6 +181,7 @@ input[type='checkbox']{
   display: flex;
   gap: 15px;
 }
+
 
 .navbar{
   position: fixed;
@@ -428,3 +445,193 @@ input[type='checkbox']{
 }
 
 
+.window{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0,0,0,0.4);
+  font-family: 'Open Sans',sans-serif;
+  z-index: 3;
+}
+
+.default_popup{
+  display: inline-flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  padding: 23px 65px 28px 65px;
+  font-size: 27px;
+  background: white;
+  border-radius: 42px;
+}
+
+.popup_title_label{
+  padding: 26px 0px 21px 0px;
+  font-size: 20px;
+}
+
+.span_delete{
+  color: red;
+}
+
+.bold_delete{
+  font-weight: bold;
+}
+
+.popup_subtitle{
+  max-width: 350px;
+  font-size: 17px;
+  margin-top: 12px;
+  line-height:normal;
+  margin-bottom: 18px;
+}
+
+.popup_input_wrapper{
+  padding-bottom: 21px;
+}
+
+.popup_row{
+  display: inline-flex;
+  padding: 26px 0px 21px 0px;
+  gap:25px
+}
+
+.popup_inputs_col{
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.popup_book_item_img img{
+  width: 112px;
+  height: auto;
+}
+
+.popup_round_item_img img{
+  width: 125px;
+  height: 125px;
+  border-radius: 50%;
+  
+}
+
+.popup_long_input{
+  width: 400px;
+}
+
+
+.add_some_book_item{
+  flex:  0 0 31%;
+  border-radius: 15px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.add_some_book_item_row{
+  display: inline-flex;
+  padding: 10px 22px 13px 15px;
+  gap: 12px;
+}
+
+.add_some_book_item_img img{
+  width: 68px;
+  height: auto;
+}
+
+.add_some_book_item_info{
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+
+.add_some_book_item_author{
+  color: #968C8C;
+}
+
+
+.add_some_books_list{
+  max-width: 750px;
+}
+
+.add_some_books_list_row{
+  max-height: 300px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 17px;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+.popup_create_shelf_long_input{
+  width: 580px;
+}
+
+.popup_content_decision{
+  font-size: 20px;
+}
+
+
+.popup_content_col{
+  padding-top: 30px;
+  padding-bottom: 21px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.popup_content_decision{
+  display: flex;
+  gap: 23px;
+}
+
+.decision_radio_btns{
+  display: flex;
+  gap: 18px;
+}
+
+.decision_radio_wrapper{
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.decision_radio{
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #D9D9D9;
+}
+.decision_comment{
+  font-size: 18px;
+}
+.decision_comment_text{
+  text-align: left;
+  max-width: 700px;
+  padding: 21px 30px 30px 30px;
+  border: 1px black solid;
+  border-radius: 17px;
+}
+
+.hint_img img{
+  width: 62px;
+  height: auto;
+}
+
+.moderator_input_text{
+  width: 715px;
+  height: 162px;
+  resize: none;
+  font-size: 18px;
+  padding: 21px 43px;
+  border-radius: 17px;
+  border: 1px black solid;
+}
