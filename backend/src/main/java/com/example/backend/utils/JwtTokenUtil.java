@@ -42,7 +42,7 @@ public class JwtTokenUtil {
         Date expiredDate=new Date(issuedDate.getTime()+lifetime.toMillis());
         Map<String,Object> claims=new HashMap<>();
         claims.put("id",user.getId());
-        claims.put("roles",user.getRole());
+        claims.put("role",user.getRole());
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(user.getUsername())
@@ -64,5 +64,5 @@ public class JwtTokenUtil {
         return  getAllClaimsFromToken(token).get("id",Integer.class);
     }
 
-    public  String getRole(String token){return getAllClaimsFromToken(token).get("roles",String.class);}
+    public  String getRole(String token){return getAllClaimsFromToken(token).get("role",String.class);}
 }

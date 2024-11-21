@@ -13,6 +13,7 @@ import lombok.Setter;
 @Entity(name = "moderations")
 public class Moderation {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="moderation_id")
     int id;
     int moderator;

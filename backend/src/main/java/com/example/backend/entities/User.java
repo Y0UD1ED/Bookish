@@ -19,6 +19,8 @@ public class User {
     String mail;
     String password;
     String role;
+    @Column(name = "is_activated")
+    boolean isActivated;
     @Column(name = "last_name")
     String lastName;
     @Column(name="first_name")

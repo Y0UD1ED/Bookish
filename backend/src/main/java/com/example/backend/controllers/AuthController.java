@@ -7,14 +7,17 @@ import com.example.backend.entities.User;
 import com.example.backend.exceptions.AppError;
 import com.example.backend.services.AuthService;
 import com.example.backend.services.UserService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.naming.AuthenticationException;
 
+@Validated
 @AllArgsConstructor
 @RestController
 public class AuthController {
@@ -22,7 +25,7 @@ public class AuthController {
     private final UserService userService;
 
     @PostMapping("/auth")
-    public ResponseEntity<JwtResponse> sendToken(@RequestBody AuthRequest authRequest){
+    public ResponseEntity<JwtResponse> sendToken(@Valid @RequestBody AuthRequest authRequest){
         return ResponseEntity.ok(authService.login(authRequest));
     }
 
@@ -33,7 +36,7 @@ public class AuthController {
     }
 
     @PostMapping("/reg")
-    public ResponseEntity<JwtResponse> regUser(@RequestBody RegRequest regRequest){
+    public ResponseEntity<JwtResponse> regUser(@Valid @RequestBody RegRequest regRequest){
         return ResponseEntity.ok(authService.regUser(regRequest));
     }
 

@@ -15,6 +15,7 @@ import java.util.List;
 @Entity(name = "books")
 public class Book {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="book_id")
     int id;
     String name;

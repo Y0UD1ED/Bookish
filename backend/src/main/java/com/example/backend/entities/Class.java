@@ -15,10 +15,13 @@ import java.util.List;
 @Entity(name = "classes")
 public class Class {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="class_id")
     int id;
     int owner;
+    @Column(name = "class_name")
     String name;
+    String image;
     String code;
     @ManyToMany
     @JoinTable(

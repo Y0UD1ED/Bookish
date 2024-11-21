@@ -8,6 +8,7 @@ import com.example.backend.dtos.RefreshJwtRequest;
 import com.example.backend.dtos.RegRequest;
 import com.example.backend.entities.User;
 import com.example.backend.exceptions.PasswordsDoNotMatchException;
+import jakarta.validation.ValidationException;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,6 +16,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+
 
 @AllArgsConstructor
 @Service
@@ -50,6 +53,18 @@ public class AuthService {
         return new JwtResponse(accessToken, refreshToken);
     }
 
+    public String changeUserPassword(String password,String passwordOld,String passwordNew) {
+        if(passwordOld.isEmpty()&&passwordNew.isEmpty()){
+            return password;
+        }
+        if(passwordNew.length()<6){
+            throw new ValidationException("Слишком короткий пароль");
+        }
+        if(!passwordEncoder.matches(passwordOld,password)){
+            throw new PasswordsDoNotMatchException("Текущий пароль не совпадает");
+        }
+        return passwordEncoder.encode(passwordNew);
+    }
 
     public void logout() {
         ExtendUserDetails user=getUserFromContext();
@@ -60,6 +75,7 @@ public class AuthService {
         JwtAuthentication authentication= (JwtAuthentication) SecurityContextHolder.getContext().getAuthentication();
         return (ExtendUserDetails) authentication.getPrincipal();
     }
+
 
 
 }
