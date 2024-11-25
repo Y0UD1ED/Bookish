@@ -13,4 +13,8 @@ import java.util.List;
 @AllArgsConstructor
 public class MyTeacherProfileDto extends MyProfileDto {
     private List<ClassDto> myClasses;
+
+    public MyTeacherProfileDto(int id, String name, String about, String role) {
+        super(id, name, about, role);
+    }
 }

@@ -1,9 +1,7 @@
 package com.example.backend.controllers;
 
 import com.example.backend.authentication.ExtendUserDetails;
-import com.example.backend.dtos.ClassDto;
-import com.example.backend.dtos.ClassResponse;
-import com.example.backend.dtos.ProgressDto;
+import com.example.backend.dtos.*;
 import com.example.backend.entities.Class;
 import com.example.backend.services.AuthService;
 import com.example.backend.services.ClassService;
@@ -61,6 +59,37 @@ public class ClassController {
     public ResponseEntity<Integer> getDataForReadAvgClass(@PathVariable(name = "id") int id){
         ExtendUserDetails user=authService.getUserFromContext();
         return ResponseEntity.ok(classService.getDataForReadAvg(id, user.getId()));
+    }
+
+
+    @GetMapping("/my/{id}/books")
+    public ResponseEntity<List<ClassBookResponse>> getBooksInClass(@PathVariable(name = "id") int id){
+        ExtendUserDetails user=authService.getUserFromContext();
+        return ResponseEntity.ok(classService.findBooksProgressByClassId(id, user.getId()));
+    }
+
+    @GetMapping("/my/{id}/students")
+    public ResponseEntity<List<ClassStudentResponse>> getStudentsInClass(@PathVariable(name = "id") int id){
+        ExtendUserDetails user=authService.getUserFromContext();
+        return ResponseEntity.ok(classService.findStudentProgressByClassId(id, user.getId()));
+    }
+
+    @GetMapping("/my/{id}/books/{bookId}/progress/have_read")
+    public ResponseEntity<ProgressDto> getDataForHaveReadBookInClass(@PathVariable(name = "id") int id,@PathVariable(name = "bookId") int bookId){
+        ExtendUserDetails user=authService.getUserFromContext();
+        return ResponseEntity.ok(classService.findHaveReadBookProgressByClassIdAndBookId(id, bookId,user.getId()));
+    }
+
+    @GetMapping("/my/{id}/books/{bookId}/progress/is_reading")
+    public ResponseEntity<ProgressDto> getDataForIsReadingBookInClass(@PathVariable(name = "id") int id,@PathVariable(name = "bookId") int bookId){
+        ExtendUserDetails user=authService.getUserFromContext();
+        return ResponseEntity.ok(classService.findIsReadingBookProgressByClassIdAndBookId(id, bookId,user.getId()));
+    }
+
+    @GetMapping("/my/{id}/books/{bookId}/progress/want_read")
+    public ResponseEntity<ProgressDto> getDataForWantReadingBookInClass(@PathVariable(name = "id") int id,@PathVariable(name = "bookId") int bookId){
+        ExtendUserDetails user=authService.getUserFromContext();
+        return ResponseEntity.ok(classService.findWantReadBookProgressByClassIdAndBookId(id, bookId,user.getId()));
     }
 
     @PostMapping("/login")

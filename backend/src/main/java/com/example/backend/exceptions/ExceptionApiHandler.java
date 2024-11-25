@@ -50,6 +50,11 @@ public class ExceptionApiHandler {
         return new ResponseEntity<AppError>(new AppError(HttpStatus.BAD_REQUEST.value(), e.getMessage(),new Date()),HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(BookNotFoundException.class)
+    public ResponseEntity<AppError> bookNotFoundException(BookNotFoundException e){
+        return new ResponseEntity<AppError>(new AppError(HttpStatus.BAD_REQUEST.value(), e.getMessage(),new Date()),HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(NoAccessToShelf.class)
     public ResponseEntity<AppError> noAccessToShelf(NoAccessToShelf e){
         return new ResponseEntity<AppError>(new AppError(HttpStatus.BAD_REQUEST.value(), e.getMessage(),new Date()),HttpStatus.BAD_REQUEST);

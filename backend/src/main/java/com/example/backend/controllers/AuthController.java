@@ -22,7 +22,6 @@ import javax.naming.AuthenticationException;
 @RestController
 public class AuthController {
     private final AuthService authService;
-    private final UserService userService;
 
     @PostMapping("/auth")
     public ResponseEntity<JwtResponse> sendToken(@Valid @RequestBody AuthRequest authRequest){

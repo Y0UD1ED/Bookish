@@ -66,7 +66,7 @@ public class UserService implements UserDetailsService {
         }
         switch (user.getRole()){
             case "student"->personalData=getStudentPersonalData(user);
-            case "teacher"->personalData=null;
+            case "teacher"->personalData=getTeacherPersonalData(user);
             case "moderator"->personalData=null;
             default -> throw new RuntimeException("Неопределенная роль у пользователя");
         }
@@ -76,7 +76,7 @@ public class UserService implements UserDetailsService {
     private MyStudentProfileDto getStudentPersonalData(User user){
         StringBuilder sb =new StringBuilder(); //сделать что-то со значениями null
         sb.append(user.getLastName()).append(" ").append(user.getFirstName()).append(" ").append(user.getMiddleName());
-        MyStudentProfileDto studentPersonalData=new MyStudentProfileDto(sb.toString(),user.getAbout(),user.getRole());
+        MyStudentProfileDto studentPersonalData=new MyStudentProfileDto(user.getId(),sb.toString(),user.getAbout(),user.getRole());
         List<Class> classes=classService.findFirst5ClassesByUser(user.getId());
         List<ClassDto> studentClasses=classService.getClassDtoListFromClassList(classes);
         List<BookDto> studentImportantBooks=classes.stream()
@@ -93,6 +93,16 @@ public class UserService implements UserDetailsService {
         studentPersonalData.setMyPersonalBooks(studentPersonalBooks);
         studentPersonalData.setMyShelfs(studentShelfs);
         return studentPersonalData;
+    }
+
+    private MyTeacherProfileDto getTeacherPersonalData(User user){
+        StringBuilder sb =new StringBuilder(); //сделать что-то со значениями null
+        sb.append(user.getLastName()).append(" ").append(user.getFirstName()).append(" ").append(user.getMiddleName());
+        MyTeacherProfileDto teacherProfileDto=new MyTeacherProfileDto(user.getId(),sb.toString(),user.getAbout(),user.getRole());
+        List<Class> classes=classService.findFirst5ClassesByUser(user.getId());
+        List<ClassDto> teacherClasses=classService.getClassDtoListFromClassList(classes);
+        teacherProfileDto.setMyClasses(teacherClasses);
+        return teacherProfileDto;
     }
 
     public UpdateUserDto getUpdateUserDtoFromUser(User user){

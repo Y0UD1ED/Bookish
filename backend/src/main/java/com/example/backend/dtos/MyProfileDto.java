@@ -10,12 +10,14 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MyProfileDto {
+    private int id;
     private String name;
     private String about;
     private String role;
     private int notificationCount;
 
-    public MyProfileDto(String name, String about, String role) {
+    public MyProfileDto(int id,String name, String about, String role) {
+        this.id=id;
         this.name = name;
         this.about = about;
         this.role = role;
