@@ -138,6 +138,11 @@ label{
   font-size: 16px;
 }
 
+.reg_btn{
+  color: white;
+  text-align: center;
+}
+
 .radio_wrapper label{
   font-size: 18px;
 }
@@ -314,25 +319,27 @@ input[type='checkbox']{
   gap: 13px;
 }
 
+.object_btns_row{
+  display: flex;
+  align-items: end;
+  gap: 13px;
+}
+
 
 .object_name{
   font-weight: bold;
 }
 
 .objects_list{
-  padding: 0px 12px;
+  padding-top: 18px;
   display: flex;
-  gap: 33px;
+  gap: 25px;
 }
 
 .lists_row{
   display: flex;
   flex-direction: column;
   gap: 57px;
-}
-
-.list_title{
-  padding-bottom: 28px;
 }
 
 .list_title_row{
@@ -347,6 +354,8 @@ input[type='checkbox']{
 
 .list_title_btns{
   display: flex;
+  text-align: center;
+  align-items: center;
   padding-top: 2px;
   gap: 16px;
 }
@@ -373,6 +382,8 @@ input[type='checkbox']{
 
 .round_item{
   cursor: pointer;
+  border-radius: 10px;
+  padding: 10px;
 }
 
 .round_item:hover{
@@ -392,6 +403,8 @@ input[type='checkbox']{
 
 .book_item{
   cursor: pointer;
+  padding: 15px;
+  border-radius: 10px;
 }
 
 .book_item:hover{
@@ -421,27 +434,7 @@ input[type='checkbox']{
 .book_item_img img{
   width: 125px;
   height: 176px;
-}
-
-.progress_item{
-  cursor: pointer;
-}
-
-.progress_item_col{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 16px 6px 3px 6px;
-  gap: 7px;
-}
-
-.progress_item:hover{
-  background: #E3EDFF;
-}
-
-.progress_item_name{
-  max-width: 125px;
-  text-align: center;
+  border-radius: 10px;
 }
 
 
@@ -615,6 +608,7 @@ input[type='checkbox']{
 }
 .decision_comment_text{
   text-align: left;
+  line-height: normal;
   max-width: 700px;
   padding: 21px 30px 30px 30px;
   border: 1px black solid;

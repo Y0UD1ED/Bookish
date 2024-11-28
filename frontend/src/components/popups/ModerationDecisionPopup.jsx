@@ -34,4 +34,4 @@ const ModerationDecisionPopup=({isShow,onClose})=>{
 }
 }
 
-export default ModerationDecisionPopup;
+export default ModerationDecisionPopup

@@ -7,9 +7,6 @@ const ProgressList=()=>{
             <div className="progress_list_title">
                 <div className="list_title_row">
                     <div className="list_title_text">Прогресс класса</div>
-                    <div className="list_title_btns">
-                        <DarkBlueButton onClickFunc={1} btnText={"Показать все"}/>
-                    </div>
                 </div>
                 <div className="just_line"></div>
             </div>

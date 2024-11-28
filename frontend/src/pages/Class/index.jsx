@@ -6,9 +6,18 @@ import Navbar from "../../components/Navbar";
 import ProgressList from "../../components/lists/ProgressList";
 import StudentsList from "../../components/lists/StudentsList";
 
-import './styles.css'
+import '../Class/styles.css'
+import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import LogoutFromClassPopup from "../../components/popups/LogoutFromClassPopup";
 
 const Class=()=>{
+    const { pathname } = useLocation();
+    useEffect(() => {
+        window.scrollTo(0,0);
+      }, [pathname]);
+    const navigate=useNavigate()
+    const [exit,setExit]=useState(false)
     return(
         <div className="one_class">
             <Navbar/>
@@ -18,25 +27,35 @@ const Class=()=>{
                     <div className="object_row">
                         <div className="object_info">
                             <div className="object_img">
-                                <img src="defaultObjectImg.svg" alt="" />
+                                <img src="/defaultObjectImg.svg" alt="" />
                             </div>
                             <div className="object_text">
-                                <div className="object_name">Фамилия Имя Отчество</div>
-                                <div className="object_about">О себе</div>
-                                <div className="object_about">Код для добавления</div>
-                                <DeleteButton btnText={'Выйти из класса'} onClickFunc={1}/>
+                                <div className="object_name">Название класса</div>
+                                <div className="object_about">10 учеников</div>
+                                <div className="object_copyboard">
+                                    <div className="object_about">Код для добавления:</div>
+                                    <div className="object_copy_code">
+                                        1234
+                                    </div>
+                                    <div className="object_copy_img">
+                                            <img src="/copy.svg" alt="" />
+                                    </div>    
+                                </div>
+                                
+                                <DeleteButton btnText={'Выйти из класса'} onClickFunc={()=>setExit(true)}/>
                             </div>
                         </div>
                         <div className="object_btns">
                             <div className="object_btns_col">
-                                <BlueButton btnText={'Редактировать профиль'} onClickFunc={1}/>
+                                <BlueButton btnText={'Назад'} onClickFunc={()=>navigate(-1)}/>
                             </div>
                         </div>
                     </div>
                 </div>
                 <ProgressList/>
                 <ImportantBooksList/>
-                <StudentsList/>
+                <StudentsList useBtns={true}/>
+                <LogoutFromClassPopup isShow={exit} onClose={()=>setExit(false)}/>
             </div>
     
             </div>

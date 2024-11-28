@@ -35,6 +35,15 @@
     gap: 35px;
 }
 
+.edit_account_inputs_col{
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    justify-content: center;
+    margin-left: -110px;
+    gap: 35px;
+}
+
 .edit_account_input_item{
     display: flex;
     gap: 15px;

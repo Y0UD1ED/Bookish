@@ -1,4 +1,6 @@
+import { Link } from 'react-router-dom';
 import './styles.css'
+import { PATHS } from '../../router';
 
 const Main=()=>{
     return(
@@ -12,12 +14,16 @@ const Main=()=>{
                 </div>
             
             <div className="buttons">
-                <p className="login_btn">
-                    <a href="" className="">Войти</a>
-                </p>
-                <p className="reg_btn">
-                    <a href="" className="">Регистрация</a>
-                </p>
+                <Link to={PATHS.AUTH} href="" className="">
+                    <p className="login_btn">
+                        Войти
+                    </p>    
+                </Link>
+                <Link to={PATHS.REG} className="">
+                    <p className="reg_btn">
+                        Регистрация
+                    </p>
+                </Link>
             </div>
             </div>
            

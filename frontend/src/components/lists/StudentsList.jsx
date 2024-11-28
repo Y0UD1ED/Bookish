@@ -1,23 +1,23 @@
 import DarkBlueButton from "../buttons/DarkBlueButton";
-import RoundItem from "../items/RoundItem";
+import StudentItem from "../items/StudentItem";
 
-const StudentsList=()=>{
+const StudentsList=({useBtns})=>{
     return(
         <div className="students_list">
             <div className="list_title">
                 <div className="list_title_row">
                     <div className="list_title_text">Ученики</div>
                     <div className="list_title_btns">
-                        <DarkBlueButton onClickFunc={1} btnText={"Показать все"}/>
+                        {useBtns&&(<DarkBlueButton onClickFunc={1} btnText={"Показать все"}/>)}
                     </div>
                 </div>
                 <div className="just_line"></div>
             </div>
             <div className="objects_list">
-                <RoundItem/>
-                <RoundItem/>
-                <RoundItem/>
-                <RoundItem/>
+                <StudentItem text={"Фамилия Имя"}/>
+                <StudentItem text={"Фамилия Имя"}/>
+                <StudentItem text={"Фамилия Имя"}/>
+                <StudentItem text={"Фамилия Имя"}/>
             </div>
         </div>
     )

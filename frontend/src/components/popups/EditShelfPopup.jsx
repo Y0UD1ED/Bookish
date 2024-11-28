@@ -13,7 +13,7 @@ const EditShelfPopup=({isShow,onClose})=>{
                 <div className="popup_title">Редактировать полку</div>
                    <div className="popup_row">
                     <div className="popup_round_item_img">
-                        <img src="userAvatar.jpg" alt="" />
+                        <img src="/userAvatar.jpg" alt="" />
                     </div>
                     <div className="popup_inputs_col">
                         <input 

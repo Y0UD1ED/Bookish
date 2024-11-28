@@ -1,15 +1,21 @@
 import BookItem from "../items/BookItem";
 import DarkBlueButton from "../buttons/DarkBlueButton";
 import LogInClassItem from "../items/LogInClassItem";
+import { useNavigate } from "react-router-dom";
+import AddBookItem from "../items/AddBookItem";
+import { useState } from "react";
+import AddPersonalBookPopup from "../popups/AddPersonalBookPopup";
 
-const BooksList=()=>{
+const BooksList=({useAdd,btnText,btnFunc})=>{
+    const navigate=useNavigate()
+    const [show,setShow]=useState(false)
     return(
         <div className="books_list">
             <div className="list_title">
                 <div className="list_title_row">
                     <div className="list_title_text">Мои книги</div>
                     <div className="list_title_btns">
-                        <DarkBlueButton onClickFunc={1} btnText={"Показать все"}/>
+                        <DarkBlueButton onClickFunc={()=>btnFunc()} btnText={btnText}/>
                     </div>
                 </div>
                 <div className="just_line"></div>
@@ -19,7 +25,8 @@ const BooksList=()=>{
                 <BookItem/>
                 <BookItem/>
                 <BookItem/>
-                <LogInClassItem/>
+                {useAdd &&(<AddBookItem onClickFunc={()=>setShow(true)}/>)}
+                <AddPersonalBookPopup isShow={show} onClose={()=>setShow(false)}/>
             </div>
         </div>
     )

@@ -4,8 +4,16 @@ import ClassesList from './lists/ClassesList'
 import ShelfsList from './lists/ShelfsList'
 import BooksList from './lists/BooksList';
 import ImportantBooksList from './lists/ImportantBooksList';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { PATHS } from '../router';
+import { useEffect } from 'react';
 
 const PersonalAccountStud=()=>{
+    const navigate=useNavigate()
+    const { pathname } = useLocation();
+    useEffect(() => {
+        window.scrollTo(0,0);
+      }, [pathname]);
     return(
         <div className="personal_account_stud">
             <div className="lists_row">
@@ -22,15 +30,17 @@ const PersonalAccountStud=()=>{
                         </div>
                         <div className="object_btns">
                             <div className="object_btns_col">
-                                <BlueButton btnText={'Редактировать профиль'} onClickFunc={1}/>
-                                <DeleteButton btnText={'Выйти'} onClickFunc={1}/>
+                                <BlueButton btnText={'Редактировать профиль'} onClickFunc={()=>navigate(PATHS.EDIT_ACCOUNT)}/>
+                                    <div className="delete_wrapper">
+                                    <DeleteButton btnText={'Выйти'} onClickFunc={()=>navigate(PATHS.MAIN)}/>
+                                    </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <ClassesList/>
                 <ShelfsList/>
-                <BooksList/>
+                <BooksList useAdd={true} btnText={"Показать все"} btnFunc={()=>navigate("/notes")} />
                 <ImportantBooksList/>
             </div>
            

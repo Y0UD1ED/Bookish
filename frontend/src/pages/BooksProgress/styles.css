@@ -1,0 +1,40 @@
+.progress_book_item_row{
+    display: flex;
+    gap: 27px;
+}
+
+.progress_book_item_info{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.progress_book_item_list{
+    display: flex;
+    gap: 15px;
+}
+
+.progress_book_item_img img{
+    width: 155px;
+    height: auto;
+    border-radius: 10px;
+}
+
+.progress_book_item_info_row{
+    display: flex;
+    font-size: 20px;
+    gap: 18px;
+}
+
+
+.progress_book_item_info_author{
+    color: #968C8C;
+}
+
+.progress_book_list_col{
+    padding-top: 28px;
+    padding-left: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 54px;
+}

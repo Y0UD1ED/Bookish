@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import { PATHS } from "../../router";
 
 
 const ProgressItem=({progressText})=>{
@@ -10,12 +12,14 @@ const ProgressItem=({progressText})=>{
     };
     return(
         <div className="progress_item" onMouseEnter={()=>setIsHover(true)} onMouseLeave={()=>setIsHover(false)}>
-            <div className="progress_item_col">
-                <div className="progress_item_circle">
-                    <div class="progress-bar" style={progressStyle}>75%</div>
+            <Link to={PATHS.PROGRESS}>
+                <div className="progress_item_col">
+                    <div className="progress_item_circle">
+                        <div class="progress-bar" style={progressStyle}>75%</div>
+                    </div>
+                    <div className="progress_item_name">{progressText}</div>
                 </div>
-                <div className="progress_item_name">{progressText}</div>
-            </div>
+            </Link>
         </div>
     )
 }

@@ -1,7 +1,19 @@
-import React from 'react';
+import React, { createContext } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
+import Store from './store/store';
+
+const store =new Store();
+const user={
+  name:"artem",
+  role:"student"
+}
+
+store.setUser(user)
+
+export const Context=createContext(store)
+
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -9,7 +21,10 @@ root.render(
   <React.StrictMode>
     <div className='wrapper'>
       <div className='content'>
-        <App />
+        <Context.Provider value={{store}}>
+          <App />
+        </Context.Provider>
+        
       </div>
     </div>
   </React.StrictMode>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Footer from "../../components/Footer";
 import Navbar from "../../components/Navbar"
 import BlueButton from "../../components/buttons/BlueButton"
@@ -11,10 +11,17 @@ import GiveModerationDecisionPopup from "../../components/popups/GiveModerationD
 import CreateShelfPopup from "../../components/popups/CreateShelfPopup";
 import AddSomeBookInShelfPopup from "../../components/popups/AddSomeBookInShelfPopup";
 import DeleteAccountPopup from "../../components/popups/DeleteAccountPopup";
+import { useLocation, useNavigate } from "react-router-dom";
+import { PATHS } from "../../router";
 
 
 const EditAccount=()=>{
     const [isShowDelete,setShowDelete]=useState(false)
+    const navigate=useNavigate()
+    const { pathname } = useLocation();
+    useEffect(() => {
+        window.scrollTo(0,0);
+      }, [pathname]);
     return(
         <div className="edit_account">
              <Navbar/>
@@ -29,7 +36,8 @@ const EditAccount=()=>{
                             <img src="defaultObjectImg.svg" alt="" />
                             <p>Изменить фото</p>
                         </div>
-                            <div className="edit_account_input_item">
+                        <div className="edit_account_inputs_col">
+                        <div className="edit_account_input_item">
                                 <label for="radio-2">Фамилия:</label>
                                 <input id="last_name" placeholder="Фамилия"/>
                             </div>
@@ -58,11 +66,13 @@ const EditAccount=()=>{
                                 <input id="last_name" placeholder="Новый пароль"/>
                             </div>
                         </div>
+                            
+                        </div>
                     </div>
                     <div className="edit_account_btns">
                         <div className="edit_account_btns_row">
-                        <DarkBlueButton btnText={"Отмена"}/>
-                        <BlueButton btnText={"Сохранить изменения"}/>
+                        <DarkBlueButton btnText={"Отмена"} onClickFunc={()=>navigate(PATHS.PERSONAL_ACCOUNT)}/>
+                        <BlueButton btnText={"Сохранить изменения"} onClickFunc={()=>window.location.reload()}/>
                         </div>
                         <DeleteButton btnText={"Удалить аккаунт"} onClickFunc={()=>setShowDelete(true)}/>
                     </div>
@@ -74,4 +84,4 @@ const EditAccount=()=>{
     )
 }
 
-export default EditAccount
+export default EditAccount;

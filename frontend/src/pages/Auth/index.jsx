@@ -1,9 +1,14 @@
 
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import FuncButton from "../../components/buttons/FuncButton";
 
 import './styles.css'
+import { PATHS } from "../../router";
 
 const Auth=()=>{
+    const navgate=useNavigate()
+
+
     return(
         <div className="backLayout">
             <div className="authContainer">
@@ -15,8 +20,8 @@ const Auth=()=>{
                     <input type="text" className="mail" placeholder="Почта" />
                     <input type="password" className="password" placeholder="Пароль"/>
                     
-                    <FuncButton onClickFunc={1} btnText={"Войти"}/>
-                    <a className="forget_pass" href="#">Забыли пароль? </a>
+                    <FuncButton onClickFunc={()=>navgate(PATHS.PERSONAL_ACCOUNT)} btnText={"Войти"}/>
+                    <Link to={PATHS.PASSWORD_RECOVERY} className="forget_pass">Забыли пароль? </Link>
                 </div>
 
             </div>

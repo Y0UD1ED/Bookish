@@ -3,6 +3,8 @@ import PassRecoveryMail from "../../components/PassRecoveryMail";
 import './styles.css'
 import PassRecoveryCode from "../../components/PassRecoveryCode";
 import PassRecoveryOk from "../../components/PassRecoveryOk";
+import { Navigate } from "react-router-dom";
+import { PATHS } from "../../router";
 
 const PasswordRecovery=()=>{
 
@@ -22,10 +24,10 @@ const PasswordRecovery=()=>{
             case 0:
                 return <PassRecoveryMail onClickFunc={increaseStep}/>
             case 1:
-                return <PassRecoveryCode onClickFunc={increaseStep}/>
+                return <PassRecoveryCode onNextClick={increaseStep} onBackClick={decreaseStep}/>
             case 2:
                 return <PassRecoveryOk onClickFunc={increaseStep}/>
-            default: return null;
+            default: return <Navigate to={PATHS.AUTH}/>;
         }
     }
 

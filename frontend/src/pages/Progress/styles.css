@@ -1,0 +1,37 @@
+.progress-bar_big {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 31px;
+    width: 170px;
+    height: 170px;
+    border-radius: 50%;
+  background: radial-gradient(closest-side, white 69%, transparent 70% 100%);
+  }
+
+
+.progress_list_title{
+    padding-bottom: 8px;
+  }
+
+
+  .progress_big_item{
+    padding-bottom: 28px;
+  }
+
+  .progress_item_circle{
+    display: flex;
+  }
+  
+  .progress_item_row{
+    display: flex;
+    align-items: center;
+    padding: 16px 6px 3px 6px;
+    gap: 40px;
+  }
+  
+  .progress_item_big_name{
+    text-align: center;
+    font-size: 40px;
+  }
+  

@@ -24,7 +24,7 @@ const AddSomeBookItem=({id,addItem,removeItem})=>{
         >
             <div className="add_some_book_item_row">
                 <div className="add_some_book_item_img">
-                    <img src="bookImage.svg" alt="" />
+                    <img src="/bookImage.svg" alt="" />
                 </div>
                 <div className="add_some_book_item_info">
                     <div className="add_some_book_item_name">Название книги</div>
