@@ -55,6 +55,7 @@ public class ShelfService {
     public BigShelfDto getBigShelfDtoFromShelf(Shelf shelf){
         BigShelfDto bigShelfDto=new BigShelfDto();
         bigShelfDto.setId(shelf.getId());
+        bigShelfDto.setOwner(shelf.getOwner());
         bigShelfDto.setDescription(shelf.getDescription());
         bigShelfDto.setName(shelf.getName());
         List<BookDto> books=shelf.getNotes().stream().map(b->new BookDto(b.getId(),b.getName(),b.getAuthor(),b.getImage())).toList();

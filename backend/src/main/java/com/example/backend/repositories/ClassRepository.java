@@ -20,4 +20,6 @@ public interface ClassRepository extends JpaRepository<Class,Integer> {
     List<Class> findClassesByUserId(@Param("userId") Integer userId);
 
     Class findClassByCode(String code);
+
+    List<Class> findClassesByOwner(int userId);
 }

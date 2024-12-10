@@ -31,6 +31,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         String role=null;
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             jwt = authHeader.substring(7);
+            if(!jwt.equals("null")&&!jwt.equals("undefined")){
             try {
                 mail = jwtTokenUtil.getMail(jwt);
                 role=jwtTokenUtil.getRole(jwt);
@@ -40,7 +41,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             } catch (SignatureException e) {
                 System.out.println("Неправильная подпись!");
             }
-        }
+        }}
         if (mail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             ExtendUserDetails userDetails = new ExtendUserDetails(id,mail, role);
             JwtAuthentication token=new JwtAuthentication(userDetails,null);

@@ -19,18 +19,19 @@ import javax.naming.AuthenticationException;
 
 @Validated
 @AllArgsConstructor
+@RequestMapping("/auth")
 @RestController
 public class AuthController {
     private final AuthService authService;
 
-    @PostMapping("/auth")
+    @PostMapping("/login")
     public ResponseEntity<JwtResponse> sendToken(@Valid @RequestBody AuthRequest authRequest){
         return ResponseEntity.ok(authService.login(authRequest));
     }
 
 
-    @GetMapping("/access_token")
-    public ResponseEntity<JwtResponse> getAccessToken(@RequestParam(name = "refresh_token") String refreshToken) {
+    @GetMapping("/refresh")
+    public ResponseEntity<JwtResponse> getAccessToken(@CookieValue(name = "refreshToken") String refreshToken) {
         return ResponseEntity.ok(authService.getAccessToken(refreshToken));
     }
 

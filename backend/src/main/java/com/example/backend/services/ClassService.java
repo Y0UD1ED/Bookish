@@ -38,6 +38,10 @@ public class ClassService {
         return classRepository.findClassesByUserId(userId);
     }
 
+    public List<Class> findClassesByOwner(int userId){
+        return classRepository.findClassesByOwner(userId);
+    }
+
     public List<ClassDto> getClassDtoListFromClassList(List<Class> classes){
         return classes.stream().map(c->new ClassDto(c.getId(),c.getName(),c.getImage())).toList();
     }
@@ -239,7 +243,7 @@ public class ClassService {
         return new ProgressDto(progress.get(),studentDtoList.get());
     }
 
-    public int getDataForReadAvg(int classId,int userId){
+    public ProgressDto getDataForReadAvg(int classId,int userId){
         Class myClass=classRepository.findById(classId).orElseThrow(()->new ClassNotFoundException("К сожалению, не нашли никакой класс."));
         List<User> students=myClass.getStudents();
         if(students.stream().noneMatch(s->s.getId()==userId)&&myClass.getOwner()!=userId){
@@ -260,7 +264,7 @@ public class ClassService {
         if(!students.isEmpty()){
             progress.set(progress.get()/students.size());
         }
-        return progress.get();
+        return new ProgressDto(progress.get(), new ArrayList<>());
     }
 
     public List<ClassBookResponse> findBooksProgressByClassId(int classId, int userId){

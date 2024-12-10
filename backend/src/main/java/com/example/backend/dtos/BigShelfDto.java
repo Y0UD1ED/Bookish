@@ -13,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 public class BigShelfDto {
     private int id;
+    private int owner;
     private String name;
     private String description;
     private List<BookDto> books;

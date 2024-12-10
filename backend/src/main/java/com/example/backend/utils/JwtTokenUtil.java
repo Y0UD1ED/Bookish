@@ -18,8 +18,11 @@ public class JwtTokenUtil {
     @Value("${jwt.secret}")
     private String secret;
 
-    @Value("${jwt.lifetime}")
-    private Duration lifetime;
+    @Value("${jwt.access.lifetime}")
+    private Duration accessLifetime;
+
+    @Value("${jwt.refresh.lifetime}")
+    private Duration refreshLifetime;
 
 
     public String generateToken(ExtendUserDetails user){
@@ -27,7 +30,7 @@ public class JwtTokenUtil {
         claims.put("role",user.getRole());
         claims.put("id",user.getId());
         Date issuedDate=new Date();
-        Date expiredDate=new Date(issuedDate.getTime()+lifetime.toMillis());
+        Date expiredDate=new Date(issuedDate.getTime()+accessLifetime.toMillis());
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(user.getUsername())
@@ -39,7 +42,7 @@ public class JwtTokenUtil {
 
     public String generateRefreshToken(ExtendUserDetails user) {
         Date issuedDate=new Date();
-        Date expiredDate=new Date(issuedDate.getTime()+lifetime.toMillis());
+        Date expiredDate=new Date(issuedDate.getTime()+refreshLifetime.toMillis());
         Map<String,Object> claims=new HashMap<>();
         claims.put("id",user.getId());
         claims.put("role",user.getRole());

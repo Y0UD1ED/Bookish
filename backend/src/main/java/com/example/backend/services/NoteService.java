@@ -13,19 +13,29 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @AllArgsConstructor
 @Service
 public class NoteService {
     private final NoteRepository noteRepository;
+    private final SimpleDateFormat dateFormat=new SimpleDateFormat("dd.MM.yyyy");
 
     public List<Note> getFirst5PersonalStudentsNotes(int studentId){
         return noteRepository.findTop5ByUserIdAndBookId(studentId,null);
     }
 
+    public List<Note> getFirst5ImportantStudentsNotes(int studentId){
+        return noteRepository.findTop5ByUserIdAndBookIdIsNotNull(studentId);
+    }
+
     public List<Note> getPersonalStudentsNotes(int studentId){
         return noteRepository.findNotesByUserIdAndBookId(studentId,null);
+    }
+
+    public List<Note> getImportantStudentsNotes(int studentId){
+        return noteRepository.findNotesByUserIdAndBookIdIsNotNull(studentId);
     }
 
     public List<BookDto> getBookDtoListFromNoteList(List<Note> notes){
@@ -58,14 +68,24 @@ public class NoteService {
         if(moderation!=null){
             isModerationPassed=moderation.getStatus()!=-1;
         }
+
+        String startDate="-";
+        String endDate="-";
+        if(note.getStartDate()!=null){
+            startDate=dateFormat.format(note.getStartDate());
+        }
+        if(note.getEndDate()!=null){
+           endDate=dateFormat.format(note.getEndDate());
+        }
         return new NoteResponse(note.getId(),
+                note.getUserId(),
                 note.getName(),
                 note.getAuthor(),
                 note.getImage(),
                 note.getReadingStatus(),
                 note.getGenre(),
-                note.getStartDate(),
-                note.getEndDate(),
+                startDate,
+                endDate,
                 note.getHeroes(),
                 note.getPlot(),
                 note.getMessage(),

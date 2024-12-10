@@ -79,10 +79,8 @@ public class UserService implements UserDetailsService {
         MyStudentProfileDto studentPersonalData=new MyStudentProfileDto(user.getId(),sb.toString(),user.getAbout(),user.getRole());
         List<Class> classes=classService.findFirst5ClassesByUser(user.getId());
         List<ClassDto> studentClasses=classService.getClassDtoListFromClassList(classes);
-        List<BookDto> studentImportantBooks=classes.stream()
-                .flatMap(c->c.getBooks().stream())
+        List<BookDto> studentImportantBooks=noteService.getFirst5ImportantStudentsNotes(user.getId()).stream()
                 .map(b->new BookDto(b.getId(),b.getName(),b.getAuthor(),b.getImage()))
-                .limit(5)
                 .toList();
         List<Note> notes=noteService.getFirst5PersonalStudentsNotes(user.getId());
         List<BookDto> studentPersonalBooks=noteService.getBookDtoListFromNoteList(notes);
@@ -99,7 +97,7 @@ public class UserService implements UserDetailsService {
         StringBuilder sb =new StringBuilder(); //сделать что-то со значениями null
         sb.append(user.getLastName()).append(" ").append(user.getFirstName()).append(" ").append(user.getMiddleName());
         MyTeacherProfileDto teacherProfileDto=new MyTeacherProfileDto(user.getId(),sb.toString(),user.getAbout(),user.getRole());
-        List<Class> classes=classService.findFirst5ClassesByUser(user.getId());
+        List<Class> classes=classService.findFirst5ClassesByOwner(user.getId());
         List<ClassDto> teacherClasses=classService.getClassDtoListFromClassList(classes);
         teacherProfileDto.setMyClasses(teacherClasses);
         return teacherProfileDto;

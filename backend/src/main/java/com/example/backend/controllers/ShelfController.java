@@ -30,42 +30,42 @@ public class ShelfController {
         return ResponseEntity.ok(shelfService.getShelfDtoListFromShelfList(shelfs));
     }
 
-    @GetMapping("my/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<BigShelfDto> getShelf(@PathVariable("id") int id){
         ExtendUserDetails user=authService.getUserFromContext();
         Shelf shelf=shelfService.getShelfById(id, user.getId());
         return ResponseEntity.ok(shelfService.getBigShelfDtoFromShelf(shelf));
     }
 
-    @PutMapping("my/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<String> updateShelf(@PathVariable("id") int id, @RequestBody UpdateShelfDto newShelf){
         ExtendUserDetails user=authService.getUserFromContext();
         shelfService.updateShelf(id,newShelf,user.getId());
         return ResponseEntity.ok("Полка была успешно изменена!");
     }
 
-    @DeleteMapping("my/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteShelf(@PathVariable(name = "id") int id){
         ExtendUserDetails user=authService.getUserFromContext();
         shelfService.deleteShelf(id,user.getId());
         return ResponseEntity.ok("Полка была успешно удалена");
     }
 
-    @GetMapping("my/{id}/notes/excluded")
+    @GetMapping("/{id}/notes/excluded")
     public ResponseEntity<List<BookDto>> getExcludedNotesInShelf(@PathVariable("id") int id){
         ExtendUserDetails user=authService.getUserFromContext();
         return ResponseEntity.ok(shelfService.getExcludedNotesInShelf(id, user.getId()));
 
     }
 
-    @PutMapping("my/{id}/notes")
+    @PutMapping("/{id}/notes")
     public ResponseEntity<String> addNotesInShelf(@RequestBody List<Integer> notes,@PathVariable("id") int id){
         ExtendUserDetails user=authService.getUserFromContext();
         shelfService.addNotesInShelf(id,notes,user.getId());
         return ResponseEntity.ok("В полку были успешно добавлены книги!");
     }
 
-    @DeleteMapping("my/{id}/notes")
+    @DeleteMapping("/{id}/notes")
     public ResponseEntity<String> deleteNotesInShelf(@PathVariable(name = "id") int id,@RequestBody List<Integer> notes){
         ExtendUserDetails user=authService.getUserFromContext();
         shelfService.deleteNotesInShelf(id,notes,user.getId());

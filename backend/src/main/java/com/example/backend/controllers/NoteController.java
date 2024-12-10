@@ -31,7 +31,7 @@ public class NoteController {
         return ResponseEntity.ok(noteService.getBookDtoListFromNoteList(notes));
     }
 
-    @GetMapping("/my/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<NoteResponse> getNote(@PathVariable(name = "id") int id){
         ExtendUserDetails user=authService.getUserFromContext();
         Note note=noteService.findNoteById(id, user.getId());
@@ -39,13 +39,13 @@ public class NoteController {
         return ResponseEntity.ok(noteService.getNoteResponseFromNoteAndModeration(note,moderation));
     }
 
-    @GetMapping("/my/{id}/moderation")
+    @GetMapping("/{id}/moderation")
     public ResponseEntity<ModerationDto> getModerationForNote(@PathVariable(name = "id") int id){
         Moderation moderation=moderationService.getModerationByNoteId(id);
         return ResponseEntity.ok(moderationService.getModerationDtoFromModeration(moderation));
     }
 
-    @PutMapping("/my/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<String> updateNote(@PathVariable(name = "id") int id, @RequestBody UpdateNoteRequest newNote){
         ExtendUserDetails user=authService.getUserFromContext();
         noteService.updateNote(id,newNote,user.getId());

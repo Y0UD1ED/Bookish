@@ -13,13 +13,14 @@ import java.util.Date;
 @AllArgsConstructor
 public class NoteResponse {
     private int id;
+    private int owner;
     private String name;
     private String author;
     private String image;
     private String readingStatus;
     private String genre;
-    private Date startDate;
-    private Date endDate;
+    private String startDate;
+    private String endDate;
     private String heroes;
     private String plot;
     private String message;
