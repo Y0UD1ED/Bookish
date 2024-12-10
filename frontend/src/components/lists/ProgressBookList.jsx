@@ -1,9 +1,9 @@
-import { useNavigate } from "react-router-dom"
-import DarkBlueButton from "../buttons/DarkBlueButton"
+import { useNavigate, useParams } from "react-router-dom"
 import ProgressBookItem from "../items/ProgressBookItem"
 import BlueButton from "../buttons/BlueButton"
 
-const ProgressBookList=()=>{
+const ProgressBookList=({books})=>{
+    const classId=useParams()
     const navigate=useNavigate()
     return(
         <div className="progress_book_list">
@@ -17,10 +17,9 @@ const ProgressBookList=()=>{
                 <div className="just_line"></div>
             </div>
             <div className="progress_book_list_col">
-                <ProgressBookItem/>
-                <ProgressBookItem/>
-                <ProgressBookItem/>
-                <ProgressBookItem/>
+                {books.map(k=>
+                    <ProgressBookItem book={k} key={k.id} classId={classId.id}/>
+                )}
             </div>
         </div>
     )

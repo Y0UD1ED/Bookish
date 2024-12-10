@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom"
 
 
-const StudentItem=({text})=>{
+const StudentItem=({student})=>{
     const defImg="/defaultClassImage.png"
     const route="/classes/1"
     const navigate=useNavigate()
@@ -11,7 +11,7 @@ const StudentItem=({text})=>{
                 <div className="round_item_img">
                     <img src={defImg} alt="" />
                 </div>
-                <div className="round_item_name">{text}</div>
+                <div className="round_item_name">{student.name}</div>
             </div>
         </div>
     )

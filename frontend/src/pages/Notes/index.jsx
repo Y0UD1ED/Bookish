@@ -1,18 +1,44 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import BlueButton from "../../components/buttons/BlueButton";
 import DarkBlueButton from "../../components/buttons/DarkBlueButton";
 import Footer from "../../components/Footer";
 import BookItem from "../../components/items/BookItem";
-import LogInClassItem from "../../components/items/LogInClassItem";
 import Navbar from "../../components/Navbar";
-import AddShelfItem from "../../components/items/AddShelfItem";
 import AddBookItem from "../../components/items/AddBookItem";
 import AddPersonalBookPopup from "../../components/popups/AddPersonalBookPopup";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { Context } from "../..";
+import { PATHS } from "../../router";
+import Loading from "../../components/Loading";
 
 const Notes=()=>{
     const navigate=useNavigate()
+    const {store}=useContext(Context)
+    const location=useLocation()
     const [show,setShow]=useState(false)
+    const [owner,setOwner]=useState(false)
+    const [books,setBooks]=useState([])
+    const [wait,setWait]=useState(false)
+    useEffect(() => {
+        const fetchData=async()=>{
+            try{
+                setWait(true)
+                if(location.pathname==PATHS.MYNOTES){
+                    setOwner(true)
+                    const res=await store.getMyNotes();
+                    setBooks(res)
+                }
+            }catch(e){
+                console.log(e)
+            }finally{
+                setWait(false)
+            }
+    }
+    fetchData()
+      },[]);
+    if(wait){
+        return <Loading/>
+    }
     return(
         <div className="notes">
             <Navbar/>
@@ -23,17 +49,16 @@ const Notes=()=>{
                             <div className="list_title_text">Мои книги</div>
                             <div className="list_title_btns">
                                 <BlueButton onClickFunc={()=>navigate(-1)} btnText={"Назад"}/>
-                                <DarkBlueButton onClickFunc={1} btnText={"Добавить"}/>
+                                {owner&&<DarkBlueButton onClickFunc={1} btnText={"Добавить"}/>}
                             </div>
                         </div>
                         <div className="just_line"></div>
                     </div>
                     <div className="objects_list">
-                        <BookItem/>
-                        <BookItem/>
-                        <BookItem/>
-                        <BookItem/>
-                        <AddBookItem onClickFunc={()=>setShow(true)}/>
+                        {books.map(k=>
+                            <BookItem book={k} key={k.id}/>
+                        )}
+                        {owner&&<AddBookItem onClickFunc={()=>setShow(true)}/>}
                         <AddPersonalBookPopup isShow={show} onClose={()=>setShow(false)}/>
                     </div>
                     </div>

@@ -1,5 +1,3 @@
-
-
 const LogInClassItem=({onClickFunc})=>{
     return(
         <div className="round_item" onClick={()=>{onClickFunc()}}>

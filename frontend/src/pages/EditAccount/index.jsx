@@ -5,12 +5,7 @@ import BlueButton from "../../components/buttons/BlueButton"
 import DarkBlueButton from "../../components/buttons/DarkBlueButton"
 import DeleteButton from "../../components/buttons/DeleteButton";
 import './styles.css'
-import AddClassPopup from "../../components/popups/AddClassPopup";
-import AddPersonalBookPopup from "../../components/popups/AddPersonalBookPopup";
-import GiveModerationDecisionPopup from "../../components/popups/GiveModerationDecisionPopup";
-import CreateShelfPopup from "../../components/popups/CreateShelfPopup";
 import AddSomeBookInShelfPopup from "../../components/popups/AddSomeBookInShelfPopup";
-import DeleteAccountPopup from "../../components/popups/DeleteAccountPopup";
 import { useLocation, useNavigate } from "react-router-dom";
 import { PATHS } from "../../router";
 

@@ -1,8 +1,5 @@
-
 import BackButton from "./buttons/BackButton";
 import FuncButton from "./buttons/FuncButton";
-
-
 
 const PassRecoveryCode=({onNextClick, onBackClick})=>{
     return(

@@ -1,4 +1,3 @@
-
 const BlueButton=({onClickFunc,btnText})=>{
     return(
         <div className="blue_button" onClick={()=>{onClickFunc()}}>

@@ -1,5 +1,3 @@
-
-
 const FuncButtonWithHint=({onClickFunc,btnText})=>{
     return(
         <div className="func_hint_btn" onClick={()=>onClickFunc()}><p>{btnText}</p>

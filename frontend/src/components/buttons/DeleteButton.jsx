@@ -1,4 +1,3 @@
-
 const DeleteButton=({onClickFunc,btnText})=>{
     return(
         <div className="delete_button" onClick={()=>{onClickFunc()}}>

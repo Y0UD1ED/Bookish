@@ -5,13 +5,6 @@ import App from './App';
 import Store from './store/store';
 
 const store =new Store();
-const user={
-  name:"artem",
-  role:"student"
-}
-
-store.setUser(user)
-
 export const Context=createContext(store)
 
 

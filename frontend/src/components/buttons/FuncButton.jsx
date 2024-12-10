@@ -1,5 +1,3 @@
-
-
 const FuncButton=({onClickFunc,btnText})=>{
     
     return(

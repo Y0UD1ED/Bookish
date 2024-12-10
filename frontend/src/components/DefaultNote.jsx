@@ -7,10 +7,12 @@ import DeletePersonalBookPopup from "./popups/DeletePersonalBookPopup";
 import ModerationDecisionPopup from "./popups/ModerationDecisionPopup";
 import { useState } from "react";
 
-const DefaultNote=({onClickFunc})=>{
+const DefaultNote=({note,onClickFunc})=>{
     const navigate=useNavigate()
     const [show,setShow]=useState(false)
     const [del,setDel]=useState(false)
+    note=note==undefined?{name:"null"}:note
+  
     return(
         <div className="default_note">
             <div className="list_title">
@@ -31,14 +33,14 @@ const DefaultNote=({onClickFunc})=>{
                         </div>
                         <div className="note_info_text">
                             <div className="note_info_text_raw">
-                                <div className="note_info_name">Название книги</div>
-                                <div className="note_info_author">Автор</div>
+                                <div className="note_info_name">{note.name}</div>
+                                <div className="note_info_author">{note.author}</div>
                             </div>
-                            <div className="note_info_property">Статус:</div>
-                            <div className="note_info_property">Жанр:</div>
-                            <div className="note_info_property">Дата начала чтения:</div>
-                            <div className="note_info_property">Дата окончания чтения:</div>
-                            <div className="note_info_warning">
+                            <div className="note_info_property">{"Статус: "+note.readingStatus}</div>
+                            <div className="note_info_property">{"Жанр: "+note.genre}</div>
+                            <div className="note_info_property">{"Дата начала чтения: "+note.startDate}</div>
+                            <div className="note_info_property">{"Дата окончания чтения: "+note.endDate}</div>
+                            {!note.moderationPassed&&<div className="note_info_warning">
                                 <div className="note_info_warning_raw">
                                 <div className="note_info_warning_img" onClick={()=>setShow(true)}>
                                     <img src="/warning.svg" alt="" />
@@ -51,14 +53,14 @@ const DefaultNote=({onClickFunc})=>{
                                 </div>
                                 </div>
                                 
-                            </div>
+                            </div>}
                         </div>
                     </div>
                 </div>
-                <TextItem title={"Главные герои"}/>
-                <TextItem title={"Сюжет"}/>
-                <TextItem title={"Основная мысль"}/>
-                <TextItem title={"Мнение"}/>
+                <TextItem title={"Главные герои"} text={note.heroes}/>
+                <TextItem title={"Сюжет"} text={note.plot}/>
+                <TextItem title={"Основная мысль"} text={note.message}/>
+                <TextItem title={"Мнение"} text={note.opinion}/>
                 <ModerationDecisionPopup isShow={show} onClose={()=>setShow(false)}/>
                 <DeletePersonalBookPopup isShow={del} onClose={()=>setDel(false)}/>
         </div>

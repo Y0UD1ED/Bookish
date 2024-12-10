@@ -1,5 +1,4 @@
 import BackButton from "../buttons/BackButton";
-import FuncButton from "../buttons/FuncButton";
 
 const ModerationDecisionPopup=({isShow,onClose})=>{
     if(isShow){

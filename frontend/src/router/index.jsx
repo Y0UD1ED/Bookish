@@ -14,6 +14,7 @@ import Shelf from "../pages/Shelf"
 import Progress from "../pages/Progress"
 import Note from "../pages/Note"
 import BooksProgress from "../pages/BooksProgress"
+import Students from "../pages/Students"
 
 
 export const PATHS={
@@ -23,16 +24,19 @@ export const PATHS={
     PASSWORD_RECOVERY: '/password_recovery',
     PERSONAL_ACCOUNT: '/me',
     EDIT_ACCOUNT: '/edit',
-    CLASSES: '/classes',
+    MYCLASSES: '/me/classes',
     CLASS: '/classes/:id',
-    BOOKS: '/books',
-    BOOKSPROGRESS:"/books/progress",
-    BOOK: '/books/:id',
-    NOTES: '/notes',
+    MYBOOKS: '/me/books',
+    USERBOOKS: '/users/:id/books',
+    BOOKSPROGRESS:"/classes/:id/books/progress",
+    MYNOTES: '/me/notes',
+    USERNOTES: '/users/:id/notes',
     NOTE: '/notes/:id',
-    SHELFS: '/shelfs',
+    MYSHELFS: '/me/shelfs',
+    USERSHELFS: '/users/:id/shelfs',
     SHELF: '/shelfs/:id',
-    PROGRESS: '/progress'
+    PROGRESS: '/classes/:id/progress',
+    STUDENTS: '/classes/:id/stydents',
 }
 
 export const router=()=>(
@@ -43,16 +47,19 @@ export const router=()=>(
         <Route path={PATHS.PASSWORD_RECOVERY} element={<PasswordRecovery/>}/>
         <Route path={PATHS.PERSONAL_ACCOUNT} element={<PersonalAccount/>}/>
         <Route path={PATHS.EDIT_ACCOUNT} element={<EditAccount/>}/>
-        <Route path={PATHS.CLASSES} element={<Classes/>}/>
+        <Route path={PATHS.MYCLASSES} element={<Classes/>}/>
         <Route path={PATHS.CLASS} element={<Class/>}/>
-        <Route path={PATHS.BOOKS} element={<Books/>}/>
+        <Route path={PATHS.MYBOOKS} element={<Books/>}/>
+        <Route path={PATHS.USERBOOKS} element={<Books/>}/>
         <Route path={PATHS.BOOKSPROGRESS} element={<BooksProgress/>}/>
-        <Route path={PATHS.BOOK} element={<Books/>}/>
         <Route path={PATHS.CLASS} element={<Class/>}/>
-        <Route path={PATHS.NOTES} element={<Notes/>}/>
+        <Route path={PATHS.MYNOTES} element={<Notes/>}/>
+        <Route path={PATHS.USERNOTES} element={<Notes/>}/>
         <Route path={PATHS.NOTE} element={<Note/>}/>
-        <Route path={PATHS.SHELFS} element={<Shelfs/>}/>
+        <Route path={PATHS.MYSHELFS} element={<Shelfs/>}/>
+        <Route path={PATHS.USERSHELFS} element={<Shelfs/>}/>
         <Route path={PATHS.SHELF} element={<Shelf/>}/>
         <Route path={PATHS.PROGRESS} element={<Progress/>}/>
+        <Route path={PATHS.STUDENTS} element={<Students/>}/>
     </Routes>
 )

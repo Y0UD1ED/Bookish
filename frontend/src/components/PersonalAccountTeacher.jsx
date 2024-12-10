@@ -1,29 +1,20 @@
-import  BlueButton from './buttons/BlueButton'
-import DeleteButton from './buttons/DeleteButton';
-import ClassesList from './lists/ClassesList'
-import ShelfsList from './lists/ShelfsList'
-import BooksList from './lists/BooksList';
-import ImportantBooksList from './lists/ImportantBooksList';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { PATHS } from '../router';
-import { useContext, useEffect, useState } from 'react';
-import { Context } from '..';
-import { observer } from 'mobx-react';
+import { useLocation, useNavigate } from "react-router-dom"
+import { PATHS } from "../router"
+import BlueButton from "./buttons/BlueButton"
+import DeleteButton from "./buttons/DeleteButton"
+import ClassesList from "./lists/ClassesList"
+import { useContext, useEffect, useState } from "react"
+import { Context } from ".."
+import { observer } from "mobx-react"
 
-const PersonalAccountStud=({data})=>{
+const PersonalAccountTeacher=({data})=>{
     const { store } = useContext(Context);
     const navigate=useNavigate()
     const [classes,setClasses]=useState([])
-    const [importantBooks,setImportantBooks]=useState([])
-    const [personalBooks,setPersonalBooks]=useState([])
-    const [shelfs,setShelfs]=useState([])
     const { pathname } = useLocation();
     useEffect(() => {
         window.scrollTo(0,0);
         setClasses(data.myClasses)
-        setImportantBooks(data.myImportantBooks)
-        setPersonalBooks(data.myPersonalBooks)
-        setShelfs(data.myShelfs)
       }, [pathname]);
 
     return(
@@ -51,13 +42,10 @@ const PersonalAccountStud=({data})=>{
                     </div>
                 </div>
                 <ClassesList classes={classes} onClickFunc={()=>navigate(PATHS.MYCLASSES)}/>
-                <ShelfsList shelfs={shelfs} onClickFunc={()=>navigate(PATHS.MYSHELFS)}/>
-                <BooksList useAdd={true} btnText={"Показать все"} btnFunc={()=>navigate(PATHS.MYNOTES)} books={personalBooks} />
-                <ImportantBooksList books={importantBooks} onClickFunc={()=>navigate(PATHS.MYBOOKS)}/>
             </div>
            
         </div>
     )
 }
 
-export default observer(PersonalAccountStud);
+export default observer(PersonalAccountTeacher)

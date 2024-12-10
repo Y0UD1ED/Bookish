@@ -333,6 +333,7 @@ input[type='checkbox']{
 .objects_list{
   padding-top: 18px;
   display: flex;
+  flex-wrap: wrap;
   gap: 25px;
 }
 
@@ -629,3 +630,59 @@ input[type='checkbox']{
   border-radius: 17px;
   border: 1px black solid;
 }
+
+
+
+.preloader{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background:#f1f2f3;
+  
+}
+
+.preloader_loading{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+
+@keyframes ldio-vz6x0mvbc7t {
+0% { transform: translate(-50%,-50%) rotate(0deg); }
+100% { transform: translate(-50%,-50%) rotate(360deg); }
+}
+.ldio-vz6x0mvbc7t div {
+position: absolute;
+width: 96px;
+height: 96px;
+top: 50%;
+left: 50%;
+transform: translate(-50%,-50%);
+border: 16px solid #3b4368;
+border-top-color: transparent;
+border-radius: 50%;
+}
+.ldio-vz6x0mvbc7t div {
+animation: ldio-vz6x0mvbc7t 1s linear infinite;
+top: 100px;
+left: 100px
+}
+.loadingio-spinner-rolling-dnbn3ekikdm {
+width: 200px;
+height: 200px;
+display: inline-block;
+overflow: hidden;
+background: #f1f2f3;
+}
+.ldio-vz6x0mvbc7t {
+width: 200px;
+height: 100px;
+position: relative;
+transform: translateZ(0) scale(1);
+backface-visibility: hidden;
+transform-origin: 0 0; /* see note above */
+}
+.ldio-vz6x0mvbc7t div { box-sizing: content-box; }
