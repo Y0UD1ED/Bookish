@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "bookish-444419",
+  "private_key_id": "be644c2c1a259493528a53223313781695220ba5",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQC9r0kSGoAsHhn0\n0AKVPsN/JxnOChax2mCizzZCyCsA9yaI8qbu5ySCbqqfMaElnlHguD7hsqtyPrGH\nIp9wOU2qaLEYpUALyXbH1mPc55kmfbKHbWq+9aPmRDwiwdisf8Q9OHkIug1jTad+\nBJIP6yax1mSnrZNOdfkfI4ttHm/R8il2u4osVK+sHMpt/uZK3Q0Anau9sdHA33jO\nI4JiDJErCRTeFID1S+q/Oia9Kwt4EzOiDyJe1ey1K3LEgnD+Dlsk87D+BeqL48w3\n3dwgLkGUuJJw7UsolTfYxpymCRfZwSFtHJU2pD7PcSBNVjfjhcLo18Q3gKJ+AYyt\nHVoHXr1dAgMBAAECggEAAaJi/3REVRz6nZtf36f8yI8Dr+dyWUdHvIoLLk7J4BDr\nv2j9JeMj82O/YJkYNFoa29QlO+NC4DxzYctbPaegva536Ch0VtBTj6vkjGC1IcRv\nfK86qOPg7Pj63lR2k3XpBkYC9PT1bJJHYSnqQEIxwSfXEi1yrs22vx1FSZlmM+mI\naH4CTa7vF2soKZPrRNJ50+5HIwE7ZgPBh7kRnXmKIYqKQWqCrtAmg22LFmZ8EKGy\nzAVGNujjEDNBCdmu/52MfS1Sg3SSdUfIWmOV/DzQvjLHqP1wa8aCGAx30eEncQLK\nUs6JE1H+zQNCOpYvR0jsqVAj9lj4pbdqQiaEqfTagQKBgQD3sAxDvdauSQHYBDso\nRsnZZU4Db5KfVkB9QsXLNr2BYWiHYw24/X9jlPLU72ss50mtQ8bl+OEHvQiy0sxU\n8L/EObkClQNgGsDzAQ+Xtm0t2E8ty0W4kUHA6WqIxo8hkzx2CpuC5nU+y+yueisf\ngnC8TSSl++45igHIwsCnFmLYMQKBgQDEDOsPkBWutwQqmXtsrb/KPd69LtLZS0TR\nd3Le0Z+jGDVZNl9LJVyze9vKHz80gEVmwpg5StwfafAEDX4crAnu2EYBLKxw0XFL\nr7sOZEDIn0924tBXGmFtUB/9ptFQ36aFLrvClh7tHrE33UHTGpFFq1rjrbLnR/6R\nVeks1RgY7QKBgQCFH8H3xtjT47lx+RQymZlzltdPUXBk417V9EWK62j/WPNtkPeX\nLeiCBVRezi+0ertGvN7yS8nm9truAg6AuMTZGo0trhmaVcbO1QskZ5BWy6QC4PYg\nNTI6FTqFOPNFAHXGm/zpZiQuFDypqk/zJ5CgJHZGIBnyIxLCbKpPI+EMgQKBgQCC\nuepzsiwDGF5a2YUHbsQYYzEHDRXjduEom3GpSjYcVqQcHLlmLj+mHszr9fH7XBzq\n7I78hQJKoCU/To/tJnppHSVw2w0RHVdilIcyjX71R+WA7LTnn9ufPHJYfMfOGZO7\n8vGYSunMS074ZTzjOy/rONuePdCxj7wbxSF6l4098QKBgQDvAShJOsiO8mMCrvrU\nlnAzJ56T9Mqg57t1RPy95Nb9jvZG4W7hkdqw4fqnwNO4mqPtpFCZU8kYDHACWKYK\n29NTh7ndIj1tNfhcTRhMsJ4E/bNdi7Q1No0Wtq/TG0arbV/PO2THFL3/I8sx5c3w\nip0i76HBUI4uSiZ/bywhzDEYwQ==\n-----END PRIVATE KEY-----\n",
+  "client_email": "bookishimagehandler@bookish-444419.iam.gserviceaccount.com",
+  "client_id": "110906751962240058142",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/bookishimagehandler%40bookish-444419.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

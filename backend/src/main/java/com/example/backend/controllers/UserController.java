@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Validated
 @AllArgsConstructor
@@ -27,12 +28,12 @@ public class UserController {
     }
 
     @PutMapping("/me/update")
-    public ResponseEntity<String> updateMyInfo(@Valid @RequestBody UpdateUserDto updatedUser){
+    public ResponseEntity<String> updateMyInfo(@Valid @RequestPart("user") UpdateUserDto updatedUser, @RequestPart(value = "image",required = false) MultipartFile file){
         ExtendUserDetails user=authService.getUserFromContext();
         User oldUser=userService.findById(user.getId());
         String passwordNew=authService.changeUserPassword(oldUser.getPassword(),updatedUser.getPassword(),updatedUser.getPasswordNew());
         oldUser.setPassword(passwordNew);
-        User updatedUserInfo=userService.updateUserInfo(oldUser, updatedUser);
+        User updatedUserInfo=userService.updateUserInfo(oldUser, updatedUser,file);
         return ResponseEntity.ok("Ваши данные успешно изменены.");
     }
 

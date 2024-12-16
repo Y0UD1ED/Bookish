@@ -16,6 +16,7 @@ public class ClassResponse {
     private String name;
     private String image;
     private int studentCount;
+    private int owner;
     private String code;
     private int allRead;
     private int nothingRead;

@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,9 +39,9 @@ public class ShelfController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateShelf(@PathVariable("id") int id, @RequestBody UpdateShelfDto newShelf){
+    public ResponseEntity<String> updateShelf(@PathVariable("id") int id, @Valid @RequestPart("shelf") UpdateShelfDto newShelf, @RequestPart(required = false) MultipartFile image){
         ExtendUserDetails user=authService.getUserFromContext();
-        shelfService.updateShelf(id,newShelf,user.getId());
+        shelfService.updateShelf(id,newShelf, image,user.getId());
         return ResponseEntity.ok("Полка была успешно изменена!");
     }
 
@@ -73,9 +74,9 @@ public class ShelfController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<String> createShelf(@Valid @RequestBody CreateShelfRequest createShelfRequest){
+    public ResponseEntity<String> createShelf(@Valid @RequestPart(value = "shelf") CreateShelfRequest createShelfRequest,@RequestPart(required = false) MultipartFile image){
         ExtendUserDetails user=authService.getUserFromContext();
-        shelfService.addShelf(createShelfRequest, user.getId());
+        shelfService.addShelf(createShelfRequest,image, user.getId());
         return ResponseEntity.ok("Полка успешно создана!");
     }
 }

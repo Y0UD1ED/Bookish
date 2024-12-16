@@ -19,6 +19,7 @@ public class UpdateUserDto {
     @NotBlank(message = "Фамилия не может быть пустой")
     private String lastName;
     private String middleName;
+    private String image;
     private String about;
 
     @NotBlank(message = "Почта не может быть пустой")

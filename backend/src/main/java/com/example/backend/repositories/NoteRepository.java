@@ -13,6 +13,8 @@ import java.util.List;
 public interface NoteRepository extends JpaRepository<Note,Integer> {
     List<Note> findTop5ByUserIdAndBookId(int userId, @Nullable Integer bookId);
 
+    List<Note> findNotesByUserId(int userId);
+
     List<Note> findTop5ByUserIdAndBookIdIsNotNull(int userId);
 
     List<Note> findNotesByUserIdAndBookIdIsNotNull(int userId);

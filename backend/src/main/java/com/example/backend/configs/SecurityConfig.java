@@ -40,6 +40,8 @@ public class SecurityConfig {
                 .cors(crs->crs.configurationSource(corsConfigurationSource()))
                 .authorizeRequests(authorize -> authorize
                         .requestMatchers("/auth/*").permitAll()
+                        .requestMatchers("/books/*").permitAll()
+                        .requestMatchers("/images/*").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

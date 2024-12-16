@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -21,6 +22,7 @@ public class UserService implements UserDetailsService {
     private final ClassService classService;
     private final NoteService noteService;
     private final ShelfService shelfService;
+    private  final ImageService imageService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -47,10 +49,14 @@ public class UserService implements UserDetailsService {
         return new ExtendUserDetails(user.getId(),user.getMail(), user.getPassword(), user.getRole());
     }
 
-    public User updateUserInfo(User user,UpdateUserDto updateUserDto){
+    public User updateUserInfo(User user, UpdateUserDto updateUserDto, MultipartFile file){
         user.setFirstName(updateUserDto.getFirstName());
         user.setLastName(updateUserDto.getLastName());
         user.setMiddleName(updateUserDto.getMiddleName());
+        if(updateUserDto.getImage().isEmpty()){
+            updateUserDto.setImage(imageService.uploadImage(file));
+        }
+        user.setPhoto(updateUserDto.getImage());
         if(!user.getMail().equals(updateUserDto.getMail())){
             user.setActivated(false);
             user.setMail(updateUserDto.getMail());
@@ -76,7 +82,7 @@ public class UserService implements UserDetailsService {
     private MyStudentProfileDto getStudentPersonalData(User user){
         StringBuilder sb =new StringBuilder(); //сделать что-то со значениями null
         sb.append(user.getLastName()).append(" ").append(user.getFirstName()).append(" ").append(user.getMiddleName());
-        MyStudentProfileDto studentPersonalData=new MyStudentProfileDto(user.getId(),sb.toString(),user.getAbout(),user.getRole());
+        MyStudentProfileDto studentPersonalData=new MyStudentProfileDto(user.getId(),sb.toString(), user.getPhoto(),user.getAbout(),user.getRole());
         List<Class> classes=classService.findFirst5ClassesByUser(user.getId());
         List<ClassDto> studentClasses=classService.getClassDtoListFromClassList(classes);
         List<BookDto> studentImportantBooks=noteService.getFirst5ImportantStudentsNotes(user.getId()).stream()
@@ -96,7 +102,7 @@ public class UserService implements UserDetailsService {
     private MyTeacherProfileDto getTeacherPersonalData(User user){
         StringBuilder sb =new StringBuilder(); //сделать что-то со значениями null
         sb.append(user.getLastName()).append(" ").append(user.getFirstName()).append(" ").append(user.getMiddleName());
-        MyTeacherProfileDto teacherProfileDto=new MyTeacherProfileDto(user.getId(),sb.toString(),user.getAbout(),user.getRole());
+        MyTeacherProfileDto teacherProfileDto=new MyTeacherProfileDto(user.getId(),sb.toString(), user.getPhoto(),user.getAbout(),user.getRole());
         List<Class> classes=classService.findFirst5ClassesByOwner(user.getId());
         List<ClassDto> teacherClasses=classService.getClassDtoListFromClassList(classes);
         teacherProfileDto.setMyClasses(teacherClasses);
@@ -104,6 +110,6 @@ public class UserService implements UserDetailsService {
     }
 
     public UpdateUserDto getUpdateUserDtoFromUser(User user){
-        return new UpdateUserDto(user.getFirstName(), user.getLastName(), user.getMiddleName(), user.getAbout(), user.getMail(),"","");
+        return new UpdateUserDto(user.getFirstName(), user.getLastName(), user.getMiddleName(),user.getPhoto(), user.getAbout(), user.getMail(),"","");
     }
 }

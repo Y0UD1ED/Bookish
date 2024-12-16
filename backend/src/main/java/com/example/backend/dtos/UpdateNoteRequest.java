@@ -1,5 +1,6 @@
 package com.example.backend.dtos;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,9 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UpdateNoteRequest {
+    @NotBlank(message = "Название не должно быть пустым!")
     private String name;
+    @NotBlank(message = "Автор должен быть указан!")
     private String author;
     private String image;
     private String readingStatus;

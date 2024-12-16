@@ -4,22 +4,27 @@ import com.example.backend.dtos.BookDto;
 import com.example.backend.dtos.CreateNoteRequest;
 import com.example.backend.dtos.NoteResponse;
 import com.example.backend.dtos.UpdateNoteRequest;
+import com.example.backend.entities.Book;
 import com.example.backend.entities.Moderation;
 import com.example.backend.entities.Note;
+import com.example.backend.entities.User;
 import com.example.backend.exceptions.NotOwnerForNoteException;
 import com.example.backend.exceptions.NoteNotFoundException;
 import com.example.backend.repositories.NoteRepository;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
 @Service
 public class NoteService {
     private final NoteRepository noteRepository;
+    private final ImageService imageService;
     private final SimpleDateFormat dateFormat=new SimpleDateFormat("dd.MM.yyyy");
 
     public List<Note> getFirst5PersonalStudentsNotes(int studentId){
@@ -38,11 +43,18 @@ public class NoteService {
         return noteRepository.findNotesByUserIdAndBookIdIsNotNull(studentId);
     }
 
+    public List<Note> getAllStudentsNotes(int studentId){
+        return noteRepository.findNotesByUserId(studentId);
+    }
+
     public List<BookDto> getBookDtoListFromNoteList(List<Note> notes){
         return notes.stream().map(n->new BookDto(n.getId(),n.getName(),n.getAuthor(),n.getImage())).toList();
     }
 
-    public void addNote(CreateNoteRequest createNoteRequest, int userId) {
+    public void addNote(CreateNoteRequest createNoteRequest, MultipartFile image, int userId) {
+        if(createNoteRequest.getImage().isEmpty()){
+            createNoteRequest.setImage(imageService.uploadImage(image));
+        }
         Note note=new Note(userId,
                 null,
                 createNoteRequest.getName(),
@@ -95,10 +107,13 @@ public class NoteService {
                 isModerationPassed);
     }
 
-    public void updateNote(int noteId,UpdateNoteRequest newNote, int userId) {
+    public void updateNote(int noteId, UpdateNoteRequest newNote, MultipartFile image, int userId) {
         Note note=noteRepository.findById(noteId).orElseThrow(()->new NoteNotFoundException("Запись не найдена!"));
         if(note.getUserId()!=userId){
             throw new NotOwnerForNoteException("Вы не можете изменить данную полку!");
+        }
+        if(newNote.getImage().isEmpty()){
+            newNote.setImage(imageService.uploadImage(image));
         }
         note.setImage(newNote.getImage());
         note.setName(newNote.getName());
@@ -115,4 +130,25 @@ public class NoteService {
         noteRepository.save(note);
     }
 
+    public void addBooksForStudents(List<Book> books, List<User> students){
+        List<Note> notes=students.stream()
+                .flatMap(s->books.stream()
+                        .map(b->new Note(s.getId(),b.getId(),b.getName(),b.getAuthor(),b.getImage(),false)))
+                .toList();
+        noteRepository.saveAll(notes);
+    }
+
+    public List<Note> getStudentsNotes(String type, int studentId) {
+        List<Note> notes=new ArrayList<>();
+        switch (type){
+            case "personal":notes=getPersonalStudentsNotes(studentId);
+            break;
+            case "important":notes=getImportantStudentsNotes(studentId);
+            break;
+            case "all":notes=getAllStudentsNotes(studentId);
+            break;
+            default:break;
+        }
+        return notes;
+    }
 }

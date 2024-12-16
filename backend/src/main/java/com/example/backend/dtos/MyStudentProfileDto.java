@@ -17,7 +17,7 @@ public class MyStudentProfileDto extends MyProfileDto{
     private List<BookDto> myPersonalBooks;
     private List<BookDto> myImportantBooks;
 
-    public MyStudentProfileDto(int id,String name, String about, String role) {
-        super(id,name, about, role);
+    public MyStudentProfileDto(int id,String name, String image, String about, String role) {
+        super(id,name,image, about, role);
     }
 }

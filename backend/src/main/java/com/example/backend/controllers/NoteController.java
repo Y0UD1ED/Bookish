@@ -5,6 +5,7 @@ import com.example.backend.dtos.*;
 import com.example.backend.entities.Moderation;
 import com.example.backend.entities.Note;
 import com.example.backend.services.AuthService;
+import com.example.backend.services.ImageService;
 import com.example.backend.services.ModerationService;
 import com.example.backend.services.NoteService;
 import jakarta.validation.Valid;
@@ -12,6 +13,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -25,9 +27,9 @@ public class NoteController {
     private final ModerationService moderationService;
 
     @GetMapping("/my")
-    public ResponseEntity<List<BookDto>> getMyNotes(){
+    public ResponseEntity<List<BookDto>> getMyNotes(@RequestParam String type){
         ExtendUserDetails user=authService.getUserFromContext();
-        List<Note> notes=noteService.getPersonalStudentsNotes(user.getId());
+        List<Note> notes=noteService.getStudentsNotes(type,user.getId());
         return ResponseEntity.ok(noteService.getBookDtoListFromNoteList(notes));
     }
 
@@ -46,16 +48,16 @@ public class NoteController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateNote(@PathVariable(name = "id") int id, @RequestBody UpdateNoteRequest newNote){
+    public ResponseEntity<String> updateNote(@PathVariable(name = "id") int id,@RequestPart(required = false) MultipartFile image,@Valid @RequestPart("note") UpdateNoteRequest newNote){
         ExtendUserDetails user=authService.getUserFromContext();
-        noteService.updateNote(id,newNote,user.getId());
+        noteService.updateNote(id,newNote,image,user.getId());
         return ResponseEntity.ok("Запись успешна изменена!");
     }
 
     @PostMapping("/create")
-    public ResponseEntity<String> createNote(@Valid @RequestBody CreateNoteRequest createNoteRequest){
+    public ResponseEntity<String> createNote(@Valid @RequestPart(value = "note") CreateNoteRequest createNoteRequest,@RequestPart(required = false) MultipartFile image){
         ExtendUserDetails user=authService.getUserFromContext();
-        noteService.addNote(createNoteRequest,user.getId());
+        noteService.addNote(createNoteRequest, image,user.getId());
         return ResponseEntity.ok("Книга успешно добавлена в читательский дневник!");
     }
 }

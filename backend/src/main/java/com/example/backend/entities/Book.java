@@ -21,7 +21,16 @@ public class Book {
     String name;
     String author;
     String image;
+    @Column(name = "class_id")
+    int classId;
     @OneToMany
     @JoinColumn(name = "book_id")
     List<Note> notes;
+
+    public Book(String name, String author, String image,int classId) {
+        this.name = name;
+        this.author = author;
+        this.image = image;
+        this.classId=classId;
+    }
 }

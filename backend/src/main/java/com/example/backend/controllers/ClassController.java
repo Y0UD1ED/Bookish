@@ -8,6 +8,7 @@ import com.example.backend.services.ClassService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,6 +76,12 @@ public class ClassController {
         return ResponseEntity.ok(classService.findBooksProgressByClassId(id, user.getId()));
     }
 
+    @PostMapping("/{id}/books")
+    public ResponseEntity<String> addBooksInClass(@PathVariable(name = "id") int id,@RequestBody List<BookDto> books){
+        classService.addBooksInClass(books,id);
+        return ResponseEntity.ok("Книги были успешно добавлены в класс!");
+    }
+
     @GetMapping("/{id}/students")
     public ResponseEntity<List<ClassStudentResponse>> getStudentsInClass(@PathVariable(name = "id") int id){
         ExtendUserDetails user=authService.getUserFromContext();
@@ -104,5 +111,12 @@ public class ClassController {
         ExtendUserDetails userDetails=authService.getUserFromContext();
         classService.addStudentInClass(userDetails.getId(), code);
         return ResponseEntity.ok("Вы были успешно добавлены в класс!");
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<String> createClass(@RequestPart MultipartFile file,@RequestPart CreateClassRequest newClass){
+        ExtendUserDetails user=authService.getUserFromContext();
+        classService.createClass(newClass,file,user.getId());
+        return ResponseEntity.ok("Класс был успешно создан!");
     }
 }

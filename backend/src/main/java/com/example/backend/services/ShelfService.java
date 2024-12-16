@@ -11,6 +11,7 @@ import com.example.backend.repositories.ShelfRepository;
 import lombok.AllArgsConstructor;
 import org.apache.el.stream.Stream;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collection;
 import java.util.List;
@@ -20,6 +21,7 @@ import java.util.List;
 public class ShelfService {
     private final ShelfRepository shelfRepository;
     private final NoteService noteService;
+    private final ImageService imageService;
 
     public List<Shelf> findFirst5PersonalStudentShelfs(int studentId){
         return shelfRepository.findTop5ByOwner(studentId);
@@ -58,14 +60,19 @@ public class ShelfService {
         bigShelfDto.setOwner(shelf.getOwner());
         bigShelfDto.setDescription(shelf.getDescription());
         bigShelfDto.setName(shelf.getName());
+        bigShelfDto.setImage(shelf.getImage());
+        bigShelfDto.setHidden(shelf.isHidden());
         List<BookDto> books=shelf.getNotes().stream().map(b->new BookDto(b.getId(),b.getName(),b.getAuthor(),b.getImage())).toList();
         bigShelfDto.setBooks(books);
         return bigShelfDto;
     }
-    public void addShelf(CreateShelfRequest createShelfRequest,int userId){
+    public void addShelf(CreateShelfRequest createShelfRequest, MultipartFile image,int userId){
         List<Note> notes=noteService.findNotesByIds(createShelfRequest.getBooks());
         if(notes.stream().anyMatch(n->n.getUserId()!=userId)){
             throw new NotOwnerForNoteException("Вы не можете добавить в свою полку чужие записи!");
+        }
+        if(createShelfRequest.getImage().isEmpty()){
+            createShelfRequest.setImage(imageService.uploadImage(image));
         }
         Shelf shelf=new Shelf(userId, createShelfRequest.getName(), createShelfRequest.getDescription(), createShelfRequest.isHidden(), createShelfRequest.getImage(), notes);
         shelfRepository.save(shelf);
@@ -88,13 +95,18 @@ public class ShelfService {
         shelfRepository.save(shelf);
     }
 
-    public void updateShelf(int shelfId, UpdateShelfDto newShelf, int userId) {
+    public void updateShelf(int shelfId, UpdateShelfDto newShelf, MultipartFile image, int userId) {
         Shelf shelf =shelfRepository.findById(shelfId).orElseThrow(()->new ShelfNotFoundException("Полку не удалось найти!"));
         if(shelf.getOwner()!=userId){
             throw new NoAccessToShelf("Вы не можете управлять данной полкой!");
         }
+        if(newShelf.getImage().isEmpty()){
+            newShelf.setImage(imageService.uploadImage(image));
+        }
         shelf.setName(newShelf.getName());
+        shelf.setImage(newShelf.getImage());
         shelf.setDescription(newShelf.getDescription());
+        shelf.setHidden(newShelf.isHidden());
         shelfRepository.save(shelf);
     }
 

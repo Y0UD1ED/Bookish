@@ -1,5 +1,6 @@
 package com.example.backend.services;
 
+import com.example.backend.authentication.ExtendUserDetails;
 import com.example.backend.dtos.*;
 import com.example.backend.entities.Book;
 import com.example.backend.entities.Class;
@@ -10,8 +11,10 @@ import com.example.backend.exceptions.ClassNotFoundException;
 import com.example.backend.exceptions.ClassToLoginError;
 import com.example.backend.exceptions.NoAccessToClassException;
 import com.example.backend.repositories.ClassRepository;
+import org.apache.commons.lang3.RandomStringUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +27,9 @@ import java.util.stream.Collectors;
 @Service
 public class ClassService {
     private final ClassRepository classRepository;
+    private final ImageService imageService;
+    private final BookService bookService;
+    private final NoteService noteService;
 
 
     public List<Class> findFirst5ClassesByUser(int userId){
@@ -105,6 +111,7 @@ public class ClassService {
         classResponse.setId(classId);
         classResponse.setName(myClass.getName());
         classResponse.setCode(myClass.getCode());
+        classResponse.setOwner(myClass.getOwner());
         classResponse.setImage(myClass.getImage());
         classResponse.setStudentCount(students.size());
         classResponse.setStudents(studentDtos);
@@ -405,4 +412,28 @@ public class ClassService {
         return studentResponseList;
     }
 
+    private String generateCode(){
+        int length = 10;
+        boolean useLetters = true;
+        boolean useNumbers = true;
+        return RandomStringUtils.random(length, useLetters, useNumbers);
+    }
+
+    public void createClass(CreateClassRequest newClass, MultipartFile file, int userId) {
+        if(newClass.getImage().isEmpty()){
+            newClass.setImage(imageService.uploadImage(file));
+        }
+        Class saveClass=new Class();
+        saveClass.setOwner(userId);
+        saveClass.setName(newClass.getName());
+        saveClass.setImage(newClass.getImage());
+        saveClass.setCode(generateCode());
+    }
+
+    public void addBooksInClass(List<BookDto> books, int classId) {
+        Class myClass=classRepository.findById(classId).orElseThrow(()->new ClassNotFoundException("К сожалению, не нашли никакой класс."));
+        List<User> students=myClass.getStudents();
+        List<Book> savedBooks=bookService.saveBooksFromBookDtoList(books,classId);
+        noteService.addBooksForStudents(savedBooks,students);
+    }
 }

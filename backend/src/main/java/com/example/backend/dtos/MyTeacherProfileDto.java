@@ -14,7 +14,7 @@ import java.util.List;
 public class MyTeacherProfileDto extends MyProfileDto {
     private List<ClassDto> myClasses;
 
-    public MyTeacherProfileDto(int id, String name, String about, String role) {
-        super(id, name, about, role);
+    public MyTeacherProfileDto(int id, String name,String image,String about, String role) {
+        super(id, name, image, about, role);
     }
 }

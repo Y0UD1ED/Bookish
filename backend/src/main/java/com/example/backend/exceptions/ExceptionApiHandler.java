@@ -3,6 +3,7 @@ package com.example.backend.exceptions;
 import jakarta.validation.ValidationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -12,6 +13,17 @@ import java.util.Date;
 
 @RestControllerAdvice
 public class ExceptionApiHandler {
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<AppError> accessDeniedException(AccessDeniedException e) {
+        return new ResponseEntity<AppError>(new AppError(HttpStatus.BAD_GATEWAY.value(), e.getMessage(),new Date()),HttpStatus.FORBIDDEN);
+
+    }
+
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<AppError> runtimeException(RuntimeException e){
+        return new ResponseEntity<AppError>(new AppError(HttpStatus.BAD_GATEWAY.value(), e.getMessage(),new Date()),HttpStatus.BAD_REQUEST);
+    }
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<AppError> badCredentialsException(BadCredentialsException e){
         return new ResponseEntity<AppError>(new AppError(HttpStatus.BAD_REQUEST.value(), "Неверный логин и/или пароль!",new Date()),HttpStatus.BAD_REQUEST);
@@ -77,6 +89,11 @@ public class ExceptionApiHandler {
 
     @ExceptionHandler(ClassNotFoundException.class)
     public ResponseEntity<AppError> classNoFoundException(ClassNotFoundException e){
+        return new ResponseEntity<AppError>(new AppError(HttpStatus.BAD_REQUEST.value(), e.getMessage(),new Date()),HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(FileIsEmptyException.class)
+    public ResponseEntity<AppError> fileIsEmptyException(FileIsEmptyException e){
         return new ResponseEntity<AppError>(new AppError(HttpStatus.BAD_REQUEST.value(), e.getMessage(),new Date()),HttpStatus.BAD_REQUEST);
     }
 
