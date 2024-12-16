@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom"
+import { API_URL } from "../../api/api"
 
 
 const StudentItem=({student})=>{
@@ -9,7 +10,7 @@ const StudentItem=({student})=>{
         <div className="round_item" onClick={()=>navigate(route)}>
             <div className="round_item_col">
                 <div className="round_item_img">
-                    <img src={defImg} alt="" />
+                    <img src={API_URL+"/images/"+student.image||"/defaultClassImage.png"} alt="" />
                 </div>
                 <div className="round_item_name">{student.name}</div>
             </div>

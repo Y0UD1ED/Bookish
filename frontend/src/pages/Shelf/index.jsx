@@ -10,6 +10,7 @@ import EditShelfPopup from "../../components/popups/EditShelfPopup";
 import DeleteShelfPopup from "../../components/popups/DeleteShelfPopup";
 import { Context } from "../..";
 import Loading from "../../components/Loading";
+import { API_URL } from "../../api/api";
 
 const Shelf=()=>{
     const { pathname } = useLocation();
@@ -17,7 +18,7 @@ const Shelf=()=>{
     const {store}=useContext(Context)
     const [owner,setOwner]=useState(false)
     const [wait,setWait]=useState(false)
-    const [shelf,setShelf]=useState({name:"none",description:"none",books:[],owner:null})
+    const [shelf,setShelf]=useState({name:"none",description:"none",image:null,books:[],owner:null})
     useEffect(() => {
         window.scrollTo(0,0);
         console.log(JSON.parse(JSON.stringify(store.user)))
@@ -54,7 +55,7 @@ const Shelf=()=>{
                     <div className="object_row">
                         <div className="object_info">
                             <div className="object_img">
-                                <img src="/defaultObjectImg.svg" alt="" />
+                                <img src={API_URL+"/images/"+shelf.image||"/defaultObjectImg.svg"} alt="" />
                             </div>
                             <div className="object_text">
                                 <div className="object_name">{shelf.name}</div>
@@ -72,10 +73,10 @@ const Shelf=()=>{
                 </div>
                 {owner&&<BooksList btnText={"Добавить книги"} btnFunc={()=>setShow(true)} books={shelf==undefined?[]:shelf.books}/>}
                 {!owner&&<BooksList useDBbtn={false} btnFunc={()=>setShow(true)} books={shelf==undefined?[]:shelf.books}/>}
-                <AddSomeBookInShelfPopup isShow={show} onClose={()=>setShow(false)}/>
+                <AddSomeBookInShelfPopup id={shelf.id} isShow={show} onClose={()=>setShow(false)}/>
             </div>
-            <EditShelfPopup isShow={edit} onClose={()=>setEdit(false)}/>
-            <DeleteShelfPopup isShow={del} onClose={()=>setDel(false)}/>
+            <EditShelfPopup shelf={shelf} isShow={edit} onClose={()=>setEdit(false)}/>
+            <DeleteShelfPopup shelf={shelf} isShow={del} onClose={()=>setDel(false)}/>
             </div>
             <Footer/>
         </div>

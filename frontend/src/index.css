@@ -190,6 +190,7 @@ input[type='checkbox']{
 
 .navbar{
   position: fixed;
+  z-index: 100;
   width: 100%;
   top: 0;;
 }
@@ -292,8 +293,9 @@ input[type='checkbox']{
 }
 
 .object_img img{
-  width: 85%;
+  width: 172px;
   height: auto;
+  border-radius: 50%;
 }
 
 .object_info{
@@ -502,14 +504,26 @@ input[type='checkbox']{
   gap: 15px;
 }
 
-.popup_book_item_img img{
-  width: 112px;
-  height: auto;
+.popup_inputs_col_shelf{
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
+
+.popup_book_item_img img{
+  width: 120px;
+  height: auto;
+  aspect-ratio: 2/3;
+  border-radius: 10px;
+}
+
+
+
 .popup_round_item_img img{
-  width: 125px;
-  height: 125px;
+  width: 130px;
+  height: 130px;
   border-radius: 50%;
   
 }
@@ -527,7 +541,7 @@ input[type='checkbox']{
 }
 
 .add_some_book_item_row{
-  display: inline-flex;
+  display: flex;
   padding: 10px 22px 13px 15px;
   gap: 12px;
 }
@@ -686,3 +700,50 @@ backface-visibility: hidden;
 transform-origin: 0 0; /* see note above */
 }
 .ldio-vz6x0mvbc7t div { box-sizing: content-box; }
+
+.popup_book_item_img_col{
+  display: flex;
+  flex-direction: column;
+}
+
+.input-file {
+  padding-top: 20px;
+	position: relative;
+	display: inline-block;
+}
+.input-file span {
+	position: relative;
+	display: inline-block;
+	cursor: pointer;
+	outline: none;
+	text-decoration: none;
+	font-size: 14px;
+	vertical-align: middle;
+	color: #335696;
+	text-align: center;
+	border-radius: 10px;
+	background-color: #E3EDFF;
+	line-height: 22px;
+	height: 40px;
+	padding: 10px 13px;
+	box-sizing: border-box;
+	border: none;
+	margin: 0;
+	transition: background-color 0.2s;
+}
+.input-file input[type=file] {
+	position: absolute;
+	z-index: -100;
+	opacity: 0;
+	display: block;
+	width: 0;
+	height: 0;
+}
+ 
+.errors{
+  max-width: 250px;
+  font-size: 14px;
+  text-align: center;
+  color: red;
+}
+

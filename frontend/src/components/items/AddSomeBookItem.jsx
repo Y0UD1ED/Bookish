@@ -1,15 +1,16 @@
 import { useState } from "react";
+import { API_URL } from "../../api/api";
 
-const AddSomeBookItem=({id,addItem,removeItem})=>{
+const AddSomeBookItem=({book,addItem,removeItem})=>{
     const colors=["white","#E3EDFF"]
     const [color,setColor]=useState(colors[0])
     const [choose,setChoose]=useState(colors[0])
     const bookHandler=()=>{
         if(choose==colors[0]){
-            addItem(id)
+            addItem(book.id)
         }
         else{
-            removeItem(id)
+            removeItem(book.id)
         }
         const newColor=choose==colors[0]?colors[1]:colors[0]
         setColor(newColor)
@@ -24,11 +25,11 @@ const AddSomeBookItem=({id,addItem,removeItem})=>{
         >
             <div className="add_some_book_item_row">
                 <div className="add_some_book_item_img">
-                    <img src="/bookImage.svg" alt="" />
+                    <img src={API_URL+"/images/"+book.image||"/bookImage.svg"} alt="" />
                 </div>
                 <div className="add_some_book_item_info">
-                    <div className="add_some_book_item_name">Название книги</div>
-                    <div className="add_some_book_item_author">Автор</div>
+                    <div className="add_some_book_item_name">{book.name}</div>
+                    <div className="add_some_book_item_author">{book.author}</div>
                 </div>
             </div>
         </div>

@@ -51,10 +51,11 @@ const Auth=()=>{
                         placeholder="Пароль"
                         value={password}
                         onChange={(e)=>setPassword(e.target.value)}/>
+                    <div className='errors' style={{display:store.isError===false?'none':'block'}}>{store.errorMessage}</div>
                     <FuncButton onClickFunc={()=>login()} btnText={"Войти"}/>
                     <Link to={PATHS.PASSWORD_RECOVERY} className="forget_pass">Забыли пароль? </Link>
                 </div>
-
+               
             </div>
            
         </div>

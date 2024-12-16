@@ -15,6 +15,8 @@ export default class Store{
     isAuth=false;
     isWaiting=false;
     isLoading=false;
+    isError=false;
+    errorMessage;
     cookies = new Cookies();
     constructor() {
         makeAutoObservable(this);
@@ -37,6 +39,13 @@ export default class Store{
     setIsLoading(loading){
         this.isLoading=loading;
     }
+    setIsError(error){
+        this.isError=error;
+    }
+    
+    setErrorMessage(error){
+        this.errorMessage=error;
+    }
 
     async login(mail,password) {
         try {
@@ -48,34 +57,93 @@ export default class Store{
             this.setIsAuth(true)
             return this.isAuth;
         } catch (e) {
-            console.log(e)
+            this.setIsError(true)
+            this.setErrorMessage(e.response ? e.response.data.message : e.message)
+            console.log(e.response.data.message)
         }
     }
 
-    async checkAuth() {
+    async logout() {
         try {
-            this.setIsLoading(true)
-            const response = await axios.get(`${API_URL}/auth/refresh`, { withCredentials: true });
-            console.log(response);
-            localStorage.setItem('token', response.data.accessToken);
-            this.setIsAuth(true);
-            await this.getMyData()
-            
+            const response = await AuthService.logout();
+            localStorage.removeItem('access_token');
+            this.cookies.remove('refreshToken');
+            this.setIsAuth(false)
         } catch (e) {
-            console.log(e);
-        }
-        finally{
-            this.setIsLoading(false)
+            this.setIsError(true)
+            this.setErrorMessage(e.response ? e.response.data.message : e.message)
+            console.log(e.response.data.message)
         }
     }
+
+    // async checkAuth() {
+    //     try {
+    //         this.setIsLoading(true)
+    //         const response = await axios.get(`${API_URL}/auth/refresh`, { withCredentials: true });
+    //         console.log(response);
+    //         localStorage.setItem('token', response.data.accessToken);
+    //         this.setIsAuth(true);
+    //         await this.getMyData()
+            
+    //     } catch (e) {
+    //          
+    //     }
+    //     finally{
+    //         this.setIsLoading(false)
+    //     }
+    // }
+
+
+    async getMyDataForUpdate() {
+        try {
+            const response = await UserService.infoUpdateMe();
+            console.log(response.data)
+            return response.data
+        } catch (e) {
+            this.setIsError(true)
+            this.setErrorMessage(e.response ? e.response.data.message : e.message)
+            console.log(e.response.data.message)
+        }
+    }
+
+    async updateMe(firstName,lastName,midleName,about,mail,currentPassword,newPasswrd,image,file) {
+        try {
+            const formData=new FormData()
+            if(file!=null){
+                image=""
+            }
+            const jsonData=JSON.stringify({"firstName":firstName,
+                "lastName":lastName,
+                "middleName":midleName,
+                "about":about,
+                "mail":mail,
+                "password":currentPassword,
+                "passwordNew":newPasswrd,
+                "image":image})
+            formData.append("image",file)
+            formData.append("user",new Blob([
+                jsonData
+            ], {
+                type: "application/json"
+            }))
+            const response = await UserService.updateMe(formData)
+            console.log(response.data)
+            return response.data
+        } catch (e) {
+            this.setIsError(true)
+            this.setErrorMessage(e.response ? e.response.data.message : e.message)
+            console.log(e.response.data.message)
+        }
+    }
+
 
     async getMyData(){
         try{
             
             const res=await UserService.me()
             this.setRole(res.data.role)
-            const {id,name,about,notificationCount}=res.data
-            this.setUser({id,name,about,notificationCount})
+            const {id,name,image,about,notificationCount}=res.data
+            this.setUser({id,name,image,about,notificationCount})
             localStorage.setItem("user_id",this.user.id)
             console.log(res)
             if(this.role=="student"){
@@ -88,7 +156,9 @@ export default class Store{
             }
             return;
         }catch(e){
-            console.log(e)
+            this.setIsError(true)
+            this.setErrorMessage(e.response ? e.response.data.message : e.message)
+            console.log(e.response.data.message)
         }
         
     }
@@ -99,7 +169,9 @@ export default class Store{
             console.log(response.data)
             return response.data
         } catch (e) {
-            console.log(e)
+            this.setIsError(true)
+            this.setErrorMessage(e.response ? e.response.data.message : e.message)
+            console.log(e.response.data.message)
         }
     }
 
@@ -109,7 +181,9 @@ export default class Store{
             console.log(response.data)
             return response.data
         } catch (e) {
-            console.log(e)
+            this.setIsError(true)
+            this.setErrorMessage(e.response ? e.response.data.message : e.message)
+            console.log(e.response.data.message)
         }
     }
 
@@ -119,7 +193,9 @@ export default class Store{
             console.log(response.data)
             return response.data
         } catch (e) {
-            console.log(e)
+            this.setIsError(true)
+            this.setErrorMessage(e.response ? e.response.data.message : e.message)
+            console.log(e.response.data.message)
         }
     }
 
@@ -142,7 +218,9 @@ export default class Store{
             return res.data
            
         } catch (e) {
-            console.log(e)
+            this.setIsError(true)
+            this.setErrorMessage(e.response ? e.response.data.message : e.message)
+            console.log(e.response.data.message)
         }
     }
     async getBookProgress(id,type,bookId) {
@@ -160,7 +238,9 @@ export default class Store{
             return res.data
            
         } catch (e) {
-            console.log(e)
+            this.setIsError(true)
+            this.setErrorMessage(e.response ? e.response.data.message : e.message)
+            console.log(e.response.data.message)
         }
     }
 
@@ -169,7 +249,9 @@ export default class Store{
             const response=await ClassService.getClassBooks(id);
             return response.data
         } catch (e) {
-            console.log(e)
+            this.setIsError(true)
+            this.setErrorMessage(e.response ? e.response.data.message : e.message)
+            console.log(e.response.data.message)
         }
     }
 
@@ -179,7 +261,9 @@ export default class Store{
             console.log(response.data)
             return response.data
         } catch (e) {
-            console.log(e)
+            this.setIsError(true)
+            this.setErrorMessage(e.response ? e.response.data.message : e.message)
+            console.log(e.response.data.message)
         }
     }
     async getSheflById(id) {
@@ -188,36 +272,191 @@ export default class Store{
             console.log(response.data)
             return response.data
         } catch (e) {
-            console.log(e)
+            this.setIsError(true)
+            this.setErrorMessage(e.response ? e.response.data.message : e.message)
+            console.log(e.response.data.message)
         }
     }
 
-    async getMyBooks() {
+
+    async getMyNotes(type) {
         try {
-            const response = await BookService.myBooks();
+            const response = await NoteService.myNotes(type);
             console.log(response.data)
             return response.data
         } catch (e) {
-            console.log(e)
+            this.setIsError(true)
+            this.setErrorMessage(e.response ? e.response.data.message : e.message)
+            console.log(e.response.data.message)
         }
     }
 
-    async getMyNotes() {
+    async getExcludedNotesInShelf(id) {
         try {
-            const response = await NoteService.myNotes();
+            const response = await ShelfService.getExcludedNotesInShelf(id);
             console.log(response.data)
             return response.data
         } catch (e) {
-            console.log(e)
+            this.setIsError(true)
+            this.setErrorMessage(e.response ? e.response.data.message : e.message)
+            console.log(e.response.data.message)
         }
     }
+
     async getNoteById(id) {
         try {
             const response = await NoteService.getNoteById(id);
             console.log(response.data)
             return response.data
         } catch (e) {
-            console.log(e)
+            this.setIsError(true)
+            this.setErrorMessage(e.response ? e.response.data.message : e.message)
+            console.log(e.response.data.message)
+        }
+    }
+
+    async createNote(name,author,isHidden,image,file) {
+        try {
+            const formData=new FormData()
+            if(file!=null){
+                image=""
+            }
+            const jsonData=JSON.stringify({"name":name,
+                "author":author,
+                "isHidden":isHidden,
+                "image":image})
+            formData.append("image",file)
+            formData.append("note",new Blob([
+                jsonData
+            ], {
+                type: "application/json"
+            }))
+            const response = await NoteService.createNote(formData)
+            console.log(response.data)
+            return response.data
+        } catch (e) {
+            this.setIsError(true)
+            this.setErrorMessage(e.response ? e.response.data.message : e.message)
+            console.log(e.response.data.message)
+        }
+    }
+
+
+    async updateNote(id,name,author,readingStatus,genre,startDate,endDate,heroes,plot,bookMessage,opinion,image,file) {
+        try {
+            const formData=new FormData()
+            if(file!=null){
+                image=""
+            }
+            if(startDate=="-"){
+                startDate=null
+            }
+            if(endDate=="-"){
+                endDate=null
+            }
+            const jsonData=JSON.stringify({"name":name,
+                "author":author,
+                "readingStatus":readingStatus,
+                "genre":genre,
+                "startDate":startDate,
+                "endDate":endDate,
+                "isHidden":false,
+                "heroes":heroes,
+                "plot":plot,
+                "message":bookMessage,
+                "opinion":opinion,
+                "image":image})
+            formData.append("image",file)
+            formData.append("note",new Blob([
+                jsonData
+            ], {
+                type: "application/json"
+            }))
+            const response = await NoteService.updateNote(id,formData)
+            console.log(response.data)
+            return response.data
+        } catch (e) {
+            this.setIsError(true)
+            this.setErrorMessage(e.response ? e.response.data.message : e.message)
+            console.log(this.errorMessage)
+        }
+    }
+
+    async deleteShelfById(id) {
+        try {
+            const response = await ShelfService.deleteShelf(id);
+            return
+        } catch (e) {
+            this.setIsError(true)
+            this.setErrorMessage(e.response ? e.response.data.message : e.message)
+            console.log(e.response.data.message)
+        }
+    }
+
+    async createShelf(name,description,isHidden,image,file,books) {
+        try {
+            const formData=new FormData()
+            if(file!=null){
+                image=""
+            }
+            const jsonData=JSON.stringify({"name":name,
+                "description":description,
+                "isHidden":isHidden,
+                "image":image,
+                "books":books})
+            formData.append("image",file)
+            formData.append("shelf",new Blob([
+                jsonData
+            ], {
+                type: "application/json"
+            }))
+            const response = await ShelfService.createShelf(formData)
+            console.log(response.data)
+            return response.data
+        } catch (e) {
+            this.setIsError(true)
+            this.setErrorMessage(e.response ? e.response.data.message : e.message)
+            console.log(e.response.data.message)
+        }
+    }
+
+    async updateShelf(id,name,description,isHidden,image,file) {
+        try {
+            const formData=new FormData()
+            if(file!=null){
+                image=""
+            }
+            const jsonData=JSON.stringify({"name":name,
+                "description":description,
+                "hidden":isHidden,
+                "image":image,
+                })
+            formData.append("image",file)
+            formData.append("shelf",new Blob([
+                jsonData
+            ], {
+                type: "application/json"
+            }))
+            const response = await ShelfService.updateShelf(id,formData)
+            console.log(response.data)
+            return response.data
+        } catch (e) {
+            this.setIsError(true)
+            this.setErrorMessage(e.response ? e.response.data.message : e.message)
+            console.log(e.response.data.message)
+        }
+    }
+
+
+
+    async addBooksInShelf(id,books) {
+        try {
+            await ShelfService.addNotesInShelf(id,books);
+            return 
+        } catch (e) {
+            this.setIsError(true)
+            this.setErrorMessage(e.response ? e.response.data.message : e.message)
+            console.log(e.response.data.message)
         }
     }
 }

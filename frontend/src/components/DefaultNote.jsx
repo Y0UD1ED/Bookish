@@ -6,6 +6,7 @@ import TextItem from "./items/TextItem";
 import DeletePersonalBookPopup from "./popups/DeletePersonalBookPopup";
 import ModerationDecisionPopup from "./popups/ModerationDecisionPopup";
 import { useState } from "react";
+import { API_URL } from "../api/api";
 
 const DefaultNote=({note,onClickFunc})=>{
     const navigate=useNavigate()
@@ -29,7 +30,7 @@ const DefaultNote=({note,onClickFunc})=>{
                 <div className="note_info">
                     <div className="note_info_raw">
                         <div className="note_info_img">
-                            <img src="/bookImage.svg" alt="" />
+                            <img src={API_URL+"/images/"+note.image||"/bookImage.svg"} alt="" />
                         </div>
                         <div className="note_info_text">
                             <div className="note_info_text_raw">

@@ -26,6 +26,12 @@
     justify-content: center;
 }
 
+.edit_account_img img{
+    width: 172px;
+    height: auto;
+    border-radius: 50%;
+}
+
 
 .edit_account_input_row{
     display: flex;

@@ -1,5 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { PATHS } from "../../router";
+import { API_URL } from "../../api/api";
 
 
 const BookItem=({book})=>{
@@ -9,7 +10,7 @@ const BookItem=({book})=>{
         <div className="book_item" onClick={()=>{!location.includes("classes")?navigate(PATHS.NOTE.replace(":id",book.id)):console.log()}}>
             <div className="book_item_col">
                 <div className="book_item_img">
-                    <img src="/bookImage.svg" alt="" />
+                    <img src={API_URL+"/images/"+book.image||"/bookImage.svg"} alt="" />
                 </div>
                 <div className="book_item_name">
                     <p>{book.name}</p>

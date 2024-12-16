@@ -83,10 +83,15 @@
 
 .edit_text_item_txt{
     width: 100%;
-    height: auto;
+    min-height: auto;
     resize: none;
+    overflow-y: auto;
     margin: 18px 0px;
     padding: 20px 25px;
     background: #E3EDFF;
     border-radius: 10px;
 }
+
+.note_info_property_selector{
+    font-size: 18px;
+  }

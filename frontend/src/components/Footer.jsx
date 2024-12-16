@@ -1,12 +1,15 @@
+import { Link } from "react-router-dom";
+import { PATHS } from "../router";
+
 const Footer=()=>{
     return(
         <div className="footer">
             <div className="pagecontainer">
                 <div className="just_line"></div>
                 <div className="footer_row">
-                    <a href="">Условия и положения</a>
-                    <a href="">Связаться</a>
-                    <a href="">Политика конфиденциальности</a>
+                    <Link to={PATHS.CONDITIONS}>Условия и положения</Link>
+                    <Link to={PATHS.CONTACTS}>Связаться</Link>
+                    <Link to={PATHS.PRIVACYPOLICY}>Политика конфиденциальности</Link>
                 </div>
             </div>
            

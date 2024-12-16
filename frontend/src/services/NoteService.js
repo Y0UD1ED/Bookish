@@ -1,8 +1,8 @@
 import $api from "../api/api";
 
 export default class NoteService{
-    static async myNotes(){
-        return $api.get('/notes/my');
+    static async myNotes(type){
+        return $api.get(`/notes/my?type=${type}`);
     }
     static async getNoteById(id){
         return $api.get(`/notes/${id}`);
@@ -10,10 +10,10 @@ export default class NoteService{
     static async getNoteModerationResponse(id){
         return $api.get(`/notes/${id}/moderation`);
     }
-    static async updateNote(id,name,author,image,readingStatus,genre,startDate,endDate,heroes,plot,message,opinion,isHidden){
-        return $api.put(`/notes/${id}/`,{name,author,image,readingStatus,genre,startDate,endDate,heroes,plot,message,opinion,isHidden});
+    static async updateNote(id,formData){
+        return $api.put(`/notes/${id}`,formData);
     }
-    static async createNote(name,author,isHidden,image){
-        return $api.post('/notes/create',{name,author,isHidden,image});
+    static async createNote(formData){
+        return $api.post('/notes/create',formData);
     }
 }

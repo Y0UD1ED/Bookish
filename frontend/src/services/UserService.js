@@ -9,7 +9,7 @@ export default class UserService{
         return $api.get('/users/me/update');
     }
 
-    static async updateMe(firstName,lastName,middleName,about,mail,password,passwordNew){
-        return $api.put('/users/me/update',{firstName,lastName,middleName,about,mail,password,passwordNew});
+    static async updateMe(formData){
+        return $api.put('/users/me/update',formData);
     }
 }

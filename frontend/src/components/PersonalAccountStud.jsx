@@ -9,6 +9,8 @@ import { PATHS } from '../router';
 import { useContext, useEffect, useState } from 'react';
 import { Context } from '..';
 import { observer } from 'mobx-react';
+import Loading from './Loading';
+import { API_URL } from '../api/api';
 
 const PersonalAccountStud=({data})=>{
     const { store } = useContext(Context);
@@ -17,6 +19,7 @@ const PersonalAccountStud=({data})=>{
     const [importantBooks,setImportantBooks]=useState([])
     const [personalBooks,setPersonalBooks]=useState([])
     const [shelfs,setShelfs]=useState([])
+    const [wait,setWait]=useState(false)
     const { pathname } = useLocation();
     useEffect(() => {
         window.scrollTo(0,0);
@@ -26,6 +29,19 @@ const PersonalAccountStud=({data})=>{
         setShelfs(data.myShelfs)
       }, [pathname]);
 
+      const logout=async()=>{
+        try{
+            setWait(true)
+            await store.logout()
+        }catch(e){
+            console.log(e)
+        }finally{
+            navigate(PATHS.MAIN)
+        }
+      }
+    if(wait){
+        return <Loading/>
+    }
     return(
         <div className="personal_account_stud">
             <div className="lists_row">
@@ -33,7 +49,7 @@ const PersonalAccountStud=({data})=>{
                     <div className="object_row">
                         <div className="object_info">
                             <div className="object_img">
-                                <img src="defaultObjectImg.svg" alt="" />
+                                <img src={API_URL+"/images/"+store.user.image||"defaultObjectImg.svg"} alt="" />
                             </div>
                             <div className="object_text">
                                 <div className="object_name">{store.user.name}</div>
@@ -44,7 +60,7 @@ const PersonalAccountStud=({data})=>{
                             <div className="object_btns_col">
                                 <BlueButton btnText={'Редактировать профиль'} onClickFunc={()=>navigate(PATHS.EDIT_ACCOUNT)}/>
                                     <div className="delete_wrapper">
-                                    <DeleteButton btnText={'Выйти'} onClickFunc={()=>navigate(PATHS.MAIN)}/>
+                                    <DeleteButton btnText={'Выйти'} onClickFunc={()=>logout()}/>
                                     </div>
                             </div>
                         </div>

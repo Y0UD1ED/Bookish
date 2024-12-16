@@ -1,4 +1,16 @@
-const EditTextItem=({title,text})=>{
+import { observer } from "mobx-react";
+import {useRef } from "react";
+
+const EditTextItem=({title,text,onTextChange})=>{
+    const textareaRef = useRef(null);
+
+    const onTextChangeFunc = (value) => {
+        onTextChange(value)
+        if (textareaRef.current) {
+            textareaRef.current.style.height = 'auto'; // Сбрасываем высоту
+            textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`; // Устанавливаем высоту в зависимости от содержимого
+        }
+    };
     return(
         <div className="edit_text_item">
               <div className="list_title">
@@ -7,11 +19,13 @@ const EditTextItem=({title,text})=>{
                 </div>
                 <div className="just_line"></div>
             </div>
-            <textarea className="edit_text_item_txt">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda omnis incidunt quaerat dicta voluptate repudiandae quisquam repellendus totam, sequi, quis distinctio voluptatibus dolores cumque mollitia nam blanditiis minima nesciunt velit?
-            </textarea>
+            <textarea className="edit_text_item_txt"
+                ref={textareaRef}
+                onChange={(e)=>onTextChangeFunc(e.target.value)}
+                value={text}
+                />
         </div>
     )
 }
 
-export default EditTextItem
+export default observer(EditTextItem)

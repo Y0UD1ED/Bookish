@@ -1,11 +1,43 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import BackButton from "../buttons/BackButton";
 import FuncButton from "../buttons/FuncButton";
 import AddSomeBooksList from "../lists/AddSomeBooksList";
 import AddSomeBookItem from "../items/AddSomeBookItem";
+import { Context } from "../..";
 
-const AddSomeBookInShelfPopup=({isShow,onClose})=>{
+const AddSomeBookInShelfPopup=({id,isShow,onClose})=>{
+    const [wait,setWait]=useState(false)
+    const [notes,setNotes]=useState([])
     let bookArr=[]
+    const {store}=useContext(Context)
+     useEffect(() => {
+        const fetchData=async()=>{
+            try{
+                setWait(true)
+                const res=await store.getExcludedNotesInShelf(id);
+                setNotes(res)
+            }catch(e){
+                console.log(e)
+            }finally{
+                setWait(false)
+            }
+            
+        }
+        if(isShow){
+            fetchData()
+        }
+        }, [isShow]);
+    
+    const addBooksInShelf=async()=>{
+        try{
+            setWait(true)
+            await store.addBooksInShelf(id,bookArr)
+        }catch(e){
+            console.log(e)
+        }finally{
+            window.location.reload()
+        }
+    }
 
     const addBookInList=(i)=>{
         bookArr.push(i)
@@ -23,23 +55,12 @@ const AddSomeBookInShelfPopup=({isShow,onClose})=>{
                 <div className="default_popup" onClick={e=>e.stopPropagation()}>
                 <div className="popup_title" style={{paddingBottom:"30px"}}>Добавление книг</div>
                 <div className="add_some_books_list">
-                <div className="add_some_books_list_row" style={{maxHeight:"400px"}}>
-                    <AddSomeBookItem id={1} addItem={addBookInList} removeItem={removeBookFromList}/>
-                    <AddSomeBookItem id={2} addItem={addBookInList} removeItem={removeBookFromList}/>
-                    <AddSomeBookItem id={3} addItem={addBookInList} removeItem={removeBookFromList}/>
-                    <AddSomeBookItem id={4} addItem={addBookInList} removeItem={removeBookFromList}/>
-                    <AddSomeBookItem id={5} addItem={addBookInList} removeItem={removeBookFromList}/>
-                    <AddSomeBookItem id={6} addItem={addBookInList} removeItem={removeBookFromList}/>
-                    <AddSomeBookItem id={7} addItem={addBookInList} removeItem={removeBookFromList}/>
-                    <AddSomeBookItem id={8} addItem={addBookInList} removeItem={removeBookFromList}/>
-                    <AddSomeBookItem id={9} addItem={addBookInList} removeItem={removeBookFromList}/>
-                    <AddSomeBookItem id={10} addItem={addBookInList} removeItem={removeBookFromList}/>
-                </div>
+                <AddSomeBooksList books={notes} addItemFunc={addBookInList} removeItemFunc={removeBookFromList}/>
         </div>
                     <div className="button_row"
                     style={{paddingTop:"20px"}}>
                         <BackButton onClickFunc={()=>onClose()}/>
-                        <FuncButton btnText={"Создать"}/>
+                        <FuncButton btnText={"Добавить"} onClickFunc={()=>addBooksInShelf()}/>
                     </div>
                 </div>
             </div>

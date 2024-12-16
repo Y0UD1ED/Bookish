@@ -15,6 +15,10 @@ import Progress from "../pages/Progress"
 import Note from "../pages/Note"
 import BooksProgress from "../pages/BooksProgress"
 import Students from "../pages/Students"
+import Conditions from "../pages/Conditions"
+import PrivacyPolicy from "../pages/PrivacyPolicy"
+import Contacts from "../pages/Contacts"
+import PrivateRoute from "./PrivateRoute"
 
 
 export const PATHS={
@@ -37,6 +41,9 @@ export const PATHS={
     SHELF: '/shelfs/:id',
     PROGRESS: '/classes/:id/progress',
     STUDENTS: '/classes/:id/stydents',
+    CONDITIONS: '/conditions',
+    PRIVACYPOLICY: '/privacy-policy',
+    CONTACTS: '/contacts',
 }
 
 export const router=()=>(
@@ -53,7 +60,7 @@ export const router=()=>(
         <Route path={PATHS.USERBOOKS} element={<Books/>}/>
         <Route path={PATHS.BOOKSPROGRESS} element={<BooksProgress/>}/>
         <Route path={PATHS.CLASS} element={<Class/>}/>
-        <Route path={PATHS.MYNOTES} element={<Notes/>}/>
+        <Route path={PATHS.MYNOTES} element={<PrivateRoute component={<Notes/>}/>}/>
         <Route path={PATHS.USERNOTES} element={<Notes/>}/>
         <Route path={PATHS.NOTE} element={<Note/>}/>
         <Route path={PATHS.MYSHELFS} element={<Shelfs/>}/>
@@ -61,5 +68,8 @@ export const router=()=>(
         <Route path={PATHS.SHELF} element={<Shelf/>}/>
         <Route path={PATHS.PROGRESS} element={<Progress/>}/>
         <Route path={PATHS.STUDENTS} element={<Students/>}/>
+        <Route path={PATHS.CONDITIONS} element={<Conditions/>}/>
+        <Route path={PATHS.PRIVACYPOLICY} element={<PrivacyPolicy/>}/>
+        <Route path={PATHS.CONTACTS} element={<Contacts/>}/>
     </Routes>
 )

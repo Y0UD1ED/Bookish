@@ -7,8 +7,8 @@ export default class ShelfService{
     static async getShelfById(id){
         return $api.get(`/shelfs/${id}`);
     }
-    static async updateShelf(id,name,description){
-        return $api.put(`/shelfs/${id}`,{name,description});
+    static async updateShelf(id,formData){
+        return $api.put(`/shelfs/${id}`,formData);
     }
     static async deleteShelf(id){
         return $api.delete(`/shelfs/${id}`);
@@ -22,7 +22,7 @@ export default class ShelfService{
     static async deleteNotesInShelf(id){
         return $api.delete(`/shelfs/${id}/notes`);
     }
-    static async createShelf(name,description,image,isHidden,books){
-        return $api.post(`/shelfs/create`,{name,description,image,isHidden,books});
+    static async createShelf(formData){
+        return $api.post(`/shelfs/create`,formData);
     }
 }
