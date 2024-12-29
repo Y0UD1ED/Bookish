@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -24,10 +25,11 @@ public class Notification {
     @ManyToOne
     @JoinColumn(name = "note_id")
     Note note;
-    @Column(name = "is_unread")
-    boolean isUnread;
     @Column(name = "created_at")
-    Date createdAt;
+    Date createdAt=new Date();
     String type;
     String content;
+
+    @OneToMany(mappedBy = "notification")
+    List<NotificationReader> notificationReaders;
 }

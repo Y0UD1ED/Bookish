@@ -44,6 +44,10 @@ public class ClassService {
         return classRepository.findClassesByUserId(userId);
     }
 
+    public Class findClassByBook(int bookId){
+        return classRepository.findClassByBookId(bookId);
+    }
+
     public List<Class> findClassesByOwner(int userId){
         return classRepository.findClassesByOwner(userId);
     }
@@ -67,6 +71,8 @@ public class ClassService {
         student.setId(studentId);
         classIn.getStudents().add(student);
         classRepository.save(classIn);
+        List<Book> books=classIn.getBooks();
+        noteService.addBooksForStudents(books,List.of(student));
     }
 
     public ClassResponse getClassData(int classId,int userId){
@@ -86,7 +92,7 @@ public class ClassService {
         int studentSize=students.size();
         AtomicInteger allRead= new AtomicInteger(0);
         AtomicInteger nothingRead= new AtomicInteger(0);
-        AtomicInteger minRead= new AtomicInteger(bookSize);
+        AtomicInteger minRead= new AtomicInteger(bookSize>0?100:0);
         AtomicInteger maxRead= new AtomicInteger(0);
         AtomicInteger avgRead= new AtomicInteger(0);
         if(bookSize>0) {
@@ -228,7 +234,7 @@ public class ClassService {
                 .flatMap(b->b.getNotes().stream())
                 .collect(Collectors.groupingBy(Note::getUserId));
         int bookSize=myClass.getBooks().size();
-        AtomicInteger progress = new AtomicInteger(0);
+        AtomicInteger progress = new AtomicInteger(bookSize>0?100:0);
         AtomicReference<List<StudentDto>> studentDtoList= new AtomicReference<>(new ArrayList<>());
         if(bookSize>0) {
             userNotes.forEach((k, v) -> {
@@ -405,9 +411,7 @@ public class ClassService {
             User user=students.stream()
                             .filter(u->u.getId()==k)
                             .findFirst().orElse(new User());
-            StringBuilder sb =new StringBuilder(); //сделать что-то со значениями null
-            sb.append(user.getLastName()).append(" ").append(user.getFirstName()).append(" ").append(user.getMiddleName());
-            studentResponseList.add(new ClassStudentResponse(user.getId(),sb.toString(),user.getPhoto(),haveRead,isReading,wantToRead));
+            studentResponseList.add(new ClassStudentResponse(user.getId(),user.getFullName(),user.getPhoto(),haveRead,isReading,wantToRead));
         });
         return studentResponseList;
     }
@@ -428,6 +432,7 @@ public class ClassService {
         saveClass.setName(newClass.getName());
         saveClass.setImage(newClass.getImage());
         saveClass.setCode(generateCode());
+        classRepository.save(saveClass);
     }
 
     public void addBooksInClass(List<BookDto> books, int classId) {
@@ -435,5 +440,44 @@ public class ClassService {
         List<User> students=myClass.getStudents();
         List<Book> savedBooks=bookService.saveBooksFromBookDtoList(books,classId);
         noteService.addBooksForStudents(savedBooks,students);
+    }
+
+    public void updateClass(int classId, CreateClassRequest newClass, MultipartFile file, int userId) {
+        Class myClass=classRepository.findById(classId).orElseThrow(()->new ClassNotFoundException("К сожалению, не нашли никакой класс."));
+        if (myClass.getOwner()!=userId){
+            throw  new NoAccessToClassException("Вы не можете изменить данный класс!");
+        }
+        myClass.setName(newClass.getName());
+        if(newClass.getImage().isEmpty()){
+            newClass.setImage(imageService.uploadImage(file));
+            imageService.deleteImage(myClass.getImage());
+        }
+        myClass.setImage(newClass.getImage());
+        classRepository.save(myClass);
+    }
+
+    public void deleteClass(int classId, int userId) {
+        Class myClass=classRepository.findById(classId).orElseThrow(()->new ClassNotFoundException("К сожалению, не нашли никакой класс."));
+        if (myClass.getOwner()!=userId){
+            throw  new NoAccessToClassException("Вы не можете изменить данный класс!");
+        }
+        bookService.deleteBooks(myClass.getBooks());
+        classRepository.deleteById(myClass.getId());
+    }
+
+    public void logoutClass(int classId, int userId) {
+        Class myClass=classRepository.findById(classId).orElseThrow(()->new ClassNotFoundException("К сожалению, не нашли никакой класс."));
+        List<User> students=myClass.getStudents();
+        if(students.stream().noneMatch(s->s.getId()==userId)){
+            throw new NoAccessToClassException("Вы не являетесь учеником данного класса!");
+        }
+        List<Note> notes=myClass.getBooks().stream()
+                .flatMap(b->b.getNotes().stream())
+                .filter(n->n.getUserId()==userId)
+                .toList();
+        noteService.makeUnimportant(notes);
+        students.removeIf(s->s.getId()==userId);
+        myClass.setStudents(students);
+        classRepository.save(myClass);
     }
 }

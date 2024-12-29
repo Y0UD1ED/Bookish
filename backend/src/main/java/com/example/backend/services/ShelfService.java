@@ -23,10 +23,6 @@ public class ShelfService {
     private final NoteService noteService;
     private final ImageService imageService;
 
-    public List<Shelf> findFirst5PersonalStudentShelfs(int studentId){
-        return shelfRepository.findTop5ByOwner(studentId);
-    }
-
     public List<Shelf> findPersonalStudentShelfs(int studentId){
         return shelfRepository.findShelfsByOwner(studentId);
     }
@@ -45,7 +41,7 @@ public class ShelfService {
             throw new NoAccessToShelf("Вы не можете управлять данной полкой!");
         }
         List<Integer> shelfNote=shelf.getNotes().stream().map(Note::getId).toList();
-        List<Note> notes=noteService.getPersonalStudentsNotes(userId);
+        List<Note> notes=noteService.getAllStudentsNotes(userId);
         notes=notes.stream().filter(n->!shelfNote.contains(n.getId())).toList();
         return noteService.getBookDtoListFromNoteList(notes);
     }
@@ -102,6 +98,7 @@ public class ShelfService {
         }
         if(newShelf.getImage().isEmpty()){
             newShelf.setImage(imageService.uploadImage(image));
+            imageService.deleteImage(shelf.getImage());
         }
         shelf.setName(newShelf.getName());
         shelf.setImage(newShelf.getImage());

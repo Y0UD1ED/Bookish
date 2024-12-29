@@ -20,10 +20,6 @@ public class ExceptionApiHandler {
 
     }
 
-    @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<AppError> runtimeException(RuntimeException e){
-        return new ResponseEntity<AppError>(new AppError(HttpStatus.BAD_GATEWAY.value(), e.getMessage(),new Date()),HttpStatus.BAD_REQUEST);
-    }
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<AppError> badCredentialsException(BadCredentialsException e){
         return new ResponseEntity<AppError>(new AppError(HttpStatus.BAD_REQUEST.value(), "Неверный логин и/или пароль!",new Date()),HttpStatus.BAD_REQUEST);
@@ -97,5 +93,9 @@ public class ExceptionApiHandler {
         return new ResponseEntity<AppError>(new AppError(HttpStatus.BAD_REQUEST.value(), e.getMessage(),new Date()),HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<AppError> runtimeException(RuntimeException e){
+        return new ResponseEntity<AppError>(new AppError(HttpStatus.BAD_GATEWAY.value(), e.getMessage(),new Date()),HttpStatus.BAD_REQUEST);
+    }
 
 }

@@ -38,4 +38,11 @@ public class User {
         this.firstName = firstName;
         this.photo="defaultPhoto";
     }
+
+    public String getFullName(){
+        String lastName=this.lastName!=null?this.lastName:"";
+        String firstName=this.firstName!=null?this.firstName:"";
+        String middleName=this.middleName!=null?this.middleName:"";
+        return String.join(" ",lastName,firstName,middleName).trim();
+    }
 }

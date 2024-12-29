@@ -22,7 +22,8 @@ public class UserService implements UserDetailsService {
     private final ClassService classService;
     private final NoteService noteService;
     private final ShelfService shelfService;
-    private  final ImageService imageService;
+    private final ImageService imageService;
+    private final NotificationService notificationService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -38,7 +39,7 @@ public class UserService implements UserDetailsService {
     }
 
     public User findById(int userId ){
-        return userRepository.findById(userId).orElseThrow(()->new UserAlreadyExistsException("Пользователь не существует."));
+        return userRepository.findById(userId).orElseThrow(()->new UsernameNotFoundException("Пользователь не существует."));
     }
 
     public ExtendUserDetails createUser(User user){
@@ -55,6 +56,7 @@ public class UserService implements UserDetailsService {
         user.setMiddleName(updateUserDto.getMiddleName());
         if(updateUserDto.getImage().isEmpty()){
             updateUserDto.setImage(imageService.uploadImage(file));
+            imageService.deleteImage(user.getPhoto());
         }
         user.setPhoto(updateUserDto.getImage());
         if(!user.getMail().equals(updateUserDto.getMail())){
@@ -76,21 +78,25 @@ public class UserService implements UserDetailsService {
             case "moderator"->personalData=null;
             default -> throw new RuntimeException("Неопределенная роль у пользователя");
         }
+        personalData.setNotificationCount(notificationService.getUserNotification(user.getId()).size());
         return personalData;
     }
 
     private MyStudentProfileDto getStudentPersonalData(User user){
-        StringBuilder sb =new StringBuilder(); //сделать что-то со значениями null
-        sb.append(user.getLastName()).append(" ").append(user.getFirstName()).append(" ").append(user.getMiddleName());
-        MyStudentProfileDto studentPersonalData=new MyStudentProfileDto(user.getId(),sb.toString(), user.getPhoto(),user.getAbout(),user.getRole());
+        MyStudentProfileDto studentPersonalData=new MyStudentProfileDto(user.getId(),user.getFullName(), user.getPhoto(),user.getAbout(),user.getRole());
         List<Class> classes=classService.findFirst5ClassesByUser(user.getId());
         List<ClassDto> studentClasses=classService.getClassDtoListFromClassList(classes);
-        List<BookDto> studentImportantBooks=noteService.getFirst5ImportantStudentsNotes(user.getId()).stream()
+        List<BookDto> studentImportantBooks=noteService.getImportantStudentsNotes(user.getId()).stream()
+                .limit(5)
                 .map(b->new BookDto(b.getId(),b.getName(),b.getAuthor(),b.getImage()))
                 .toList();
-        List<Note> notes=noteService.getFirst5PersonalStudentsNotes(user.getId());
+        List<Note> notes=noteService.getPersonalStudentsNotes(user.getId()).stream()
+                .limit(5)
+                .toList();
         List<BookDto> studentPersonalBooks=noteService.getBookDtoListFromNoteList(notes);
-        List<Shelf> shelves=shelfService.findFirst5PersonalStudentShelfs(user.getId());
+        List<Shelf> shelves=shelfService.findPersonalStudentShelfs(user.getId()).stream()
+                .limit(5)
+                .toList();
         List<ShelfDto> studentShelfs=shelfService.getShelfDtoListFromShelfList(shelves);
         studentPersonalData.setMyClasses(studentClasses);
         studentPersonalData.setMyImportantBooks(studentImportantBooks);
@@ -100,10 +106,8 @@ public class UserService implements UserDetailsService {
     }
 
     private MyTeacherProfileDto getTeacherPersonalData(User user){
-        StringBuilder sb =new StringBuilder(); //сделать что-то со значениями null
-        sb.append(user.getLastName()).append(" ").append(user.getFirstName()).append(" ").append(user.getMiddleName());
-        MyTeacherProfileDto teacherProfileDto=new MyTeacherProfileDto(user.getId(),sb.toString(), user.getPhoto(),user.getAbout(),user.getRole());
-        List<Class> classes=classService.findFirst5ClassesByOwner(user.getId());
+        MyTeacherProfileDto teacherProfileDto=new MyTeacherProfileDto(user.getId(), user.getFullName(), user.getPhoto(),user.getAbout(),user.getRole());
+        List<Class> classes=classService.findClassesByOwner(user.getId()).stream().limit(5).toList();
         List<ClassDto> teacherClasses=classService.getClassDtoListFromClassList(classes);
         teacherProfileDto.setMyClasses(teacherClasses);
         return teacherProfileDto;
@@ -111,5 +115,29 @@ public class UserService implements UserDetailsService {
 
     public UpdateUserDto getUpdateUserDtoFromUser(User user){
         return new UpdateUserDto(user.getFirstName(), user.getLastName(), user.getMiddleName(),user.getPhoto(), user.getAbout(), user.getMail(),"","");
+    }
+
+    public UserDto getStudentData(int studentId) {
+        User user=findById(studentId);
+        UserDto student=null;
+        if(user.getRole().equals("teacher")){
+            throw new UsernameNotFoundException("Студент не найден!");
+        }
+        List<BookDto> studentImportantBooks=noteService.getImportantStudentsNotes(studentId).stream()
+                .limit(5)
+                .map(b->new BookDto(b.getId(),b.getName(),b.getAuthor(),b.getImage()))
+                .toList();
+        List<Note> notes=noteService.getPersonalStudentsNotes(studentId).stream()
+                .filter(n->!n.isHidden())
+                .limit(5)
+                .toList();
+        List<BookDto> studentPersonalBooks=noteService.getBookDtoListFromNoteList(notes);
+        List<Shelf> shelves=shelfService.findPersonalStudentShelfs(studentId).stream()
+                .filter(s->!s.isHidden())
+                .limit(5)
+                .toList();
+        List<ShelfDto> studentShelfs=shelfService.getShelfDtoListFromShelfList(shelves);
+        student=new UserDto(user.getId(), user.getFullName(), user.getPhoto(), user.getAbout(), studentShelfs,studentPersonalBooks,studentImportantBooks);
+        return student;
     }
 }

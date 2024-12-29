@@ -27,14 +27,6 @@ public class NoteService {
     private final ImageService imageService;
     private final SimpleDateFormat dateFormat=new SimpleDateFormat("dd.MM.yyyy");
 
-    public List<Note> getFirst5PersonalStudentsNotes(int studentId){
-        return noteRepository.findTop5ByUserIdAndBookId(studentId,null);
-    }
-
-    public List<Note> getFirst5ImportantStudentsNotes(int studentId){
-        return noteRepository.findTop5ByUserIdAndBookIdIsNotNull(studentId);
-    }
-
     public List<Note> getPersonalStudentsNotes(int studentId){
         return noteRepository.findNotesByUserIdAndBookId(studentId,null);
     }
@@ -70,7 +62,7 @@ public class NoteService {
     public Note findNoteById(int noteId,int userId){
         Note note=noteRepository.findById(noteId).orElseThrow(()->new NoteNotFoundException("Запись не найдена!"));
         if(note.getUserId()!=userId&&note.isHidden()&&note.getBookId()==null){
-            throw new NotOwnerForNoteException("Вы не можете посмотреть данную полку!");
+            throw new NotOwnerForNoteException("Вы не можете посмотреть данную запись!");
         }
         return note;
     }
@@ -107,14 +99,16 @@ public class NoteService {
                 isModerationPassed);
     }
 
-    public void updateNote(int noteId, UpdateNoteRequest newNote, MultipartFile image, int userId) {
-        Note note=noteRepository.findById(noteId).orElseThrow(()->new NoteNotFoundException("Запись не найдена!"));
+    public Note updateNote(Note note, UpdateNoteRequest newNote, MultipartFile image, int userId) {
+
         if(note.getUserId()!=userId){
             throw new NotOwnerForNoteException("Вы не можете изменить данную полку!");
         }
         if(newNote.getImage().isEmpty()){
             newNote.setImage(imageService.uploadImage(image));
+            imageService.deleteImage(note.getImage());
         }
+        String oldReadingStatus=note.getReadingStatus();
         note.setImage(newNote.getImage());
         note.setName(newNote.getName());
         note.setAuthor(newNote.getAuthor());
@@ -128,6 +122,7 @@ public class NoteService {
         note.setMessage(newNote.getMessage());
         note.setOpinion(newNote.getOpinion());
         noteRepository.save(note);
+        return note;
     }
 
     public void addBooksForStudents(List<Book> books, List<User> students){
@@ -150,5 +145,10 @@ public class NoteService {
             default:break;
         }
         return notes;
+    }
+
+    public void makeUnimportant(List<Note> notes) {
+        notes.forEach(n->n.setBookId(null));
+        noteRepository.saveAll(notes);
     }
 }

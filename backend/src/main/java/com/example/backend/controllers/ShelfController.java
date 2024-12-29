@@ -31,6 +31,14 @@ public class ShelfController {
         return ResponseEntity.ok(shelfService.getShelfDtoListFromShelfList(shelfs));
     }
 
+    @GetMapping
+    public ResponseEntity<List<ShelfDto>> getStundetShelfs(@RequestParam("user") int id){
+        List<Shelf> shelfs=shelfService.findPersonalStudentShelfs(id).stream()
+                .filter(s->!s.isHidden())
+                .toList();
+        return ResponseEntity.ok(shelfService.getShelfDtoListFromShelfList(shelfs));
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<BigShelfDto> getShelf(@PathVariable("id") int id){
         ExtendUserDetails user=authService.getUserFromContext();

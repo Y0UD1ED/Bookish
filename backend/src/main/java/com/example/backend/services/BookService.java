@@ -18,6 +18,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @AllArgsConstructor
 @Service
@@ -44,15 +46,16 @@ public class BookService {
             file.transferTo(tempFile);
             FileInputStream fis = new FileInputStream(tempFile);
             XWPFDocument document = new XWPFDocument(fis);
+            int i=0;
             for (XWPFParagraph paragraph : document.getParagraphs()) {
                 String text = paragraph.getText();
                 if (!text.trim().isEmpty()) {
                     // Предполагаем, что формат записи: "1. Автор - Название"
                     String[] parts = text.split(" - ");
                     if (parts.length == 2) {
-                        String author = parts[0].split("\\.")[1].trim();
-                        String title = parts[1].trim();
-                        books.add(new BookDto(0,title,author,"defaultImage"));
+                        String author = parts[0].trim().split("\\.",2)[1].trim();
+                        String title = parts[1].trim().substring(1,parts[1].trim().length()-1);
+                        books.add(new BookDto(i++,title,author,"defaultBookImage.png"));
                     }
                 }
             }
@@ -84,5 +87,9 @@ public class BookService {
     public void deleteBook(int bookId) {
         Book oldBook=bookRepository.findById(bookId).orElseThrow(()->new BookNotFoundException("Книга не найдена!"));
         bookRepository.deleteById(bookId);
+    }
+
+    public void deleteBooks(List<Book> books) {
+        bookRepository.deleteAll(books);
     }
 }

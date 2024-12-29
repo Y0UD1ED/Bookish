@@ -39,6 +39,20 @@ public class ClassController {
         return ResponseEntity.ok(classService.getClassData(id, user.getId()));
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteClass(@PathVariable(name = "id") int id){
+        ExtendUserDetails user=authService.getUserFromContext();
+        classService.deleteClass(id,user.getId());
+        return ResponseEntity.ok("Класс был успешно удален!");
+    }
+
+    @PutMapping("/{id}/logout")
+    public ResponseEntity<String> logoutClass(@PathVariable(name = "id") int id){
+        ExtendUserDetails user=authService.getUserFromContext();
+        classService.logoutClass(id,user.getId());
+        return ResponseEntity.ok("Вы вышли из класса!");
+    }
+
     @GetMapping("/{id}/progress/read_all")
     public ResponseEntity<ProgressDto> getDataForReadAllInClass(@PathVariable(name = "id") int id){
         ExtendUserDetails user=authService.getUserFromContext();
@@ -114,9 +128,16 @@ public class ClassController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<String> createClass(@RequestPart MultipartFile file,@RequestPart CreateClassRequest newClass){
+    public ResponseEntity<String> createClass(@RequestPart(required = false,name = "image") MultipartFile file,@RequestPart CreateClassRequest newClass){
         ExtendUserDetails user=authService.getUserFromContext();
         classService.createClass(newClass,file,user.getId());
         return ResponseEntity.ok("Класс был успешно создан!");
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<String> updateClass(@PathVariable("id") int classId, @RequestPart(required = false,name = "image") MultipartFile file,@RequestPart CreateClassRequest newClass){
+        ExtendUserDetails user=authService.getUserFromContext();
+        classService.updateClass(classId,newClass,file,user.getId());
+        return ResponseEntity.ok("Класс был успешно изменен!");
     }
 }

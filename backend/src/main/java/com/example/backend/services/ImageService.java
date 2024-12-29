@@ -26,8 +26,6 @@ import java.util.Collections;
 @Service
 @AllArgsConstructor
 public class ImageService {
-    private static final JsonFactory JSON_FACTORY= GsonFactory.getDefaultInstance();
-    private static final String SERVICE_ACCOUNT_KEY_PATH=getPathToGoogleCredentials();
 
     private final String uploadDir = "uploads/";
 
@@ -38,13 +36,14 @@ public class ImageService {
         return RandomStringUtils.random(length, useLetters, useNumbers);
     }
 
-    private static String getPathToGoogleCredentials() {
-        try{
-            return Paths.get(ImageService.class.getResource("/bookish.json").toURI()).toString();
-        }catch(URISyntaxException e){
-            System.out.println(e.getMessage());
+    public void deleteImage(String name) {
+        try {
+            if (Files.exists(Paths.get(uploadDir, name))) {
+                Files.delete(Paths.get(uploadDir, name));
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-        return "";
     }
 
     public String uploadImage(MultipartFile file)  {
@@ -65,14 +64,4 @@ public class ImageService {
         return "defaultMessage";
     }
 
-    private Drive createDriveService() throws IOException, GeneralSecurityException {
-        GoogleCredential credentials = GoogleCredential.fromStream(new FileInputStream(SERVICE_ACCOUNT_KEY_PATH))
-                .createScoped(Collections.singleton(DriveScopes.DRIVE));
-
-        return new Drive.Builder(
-                GoogleNetHttpTransport.newTrustedTransport(),
-                JSON_FACTORY,
-                credentials)
-                .build();
-    }
 }
