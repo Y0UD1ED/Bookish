@@ -1,12 +1,16 @@
+import { useNavigate } from "react-router-dom";
+import { API_URL } from "../../api/api";
+import { PATHS } from "../../router";
 import MemberProgressItem from "./MemberProgressItem";
 
 
 const ClassMemberItem=({student})=>{
+    const navigate=useNavigate()
     return(
-        <div className="class_member_item">
+        <div className="class_member_item" onClick={()=>navigate(PATHS.USER.replace(":id",student.id))}>
             <div className="member_row">
                 <div className="member_img">
-                    <img src="/defaultObjectImg.svg" alt="" />
+                    <img src={API_URL+"/images/"+student.image|| "/defaultObjectImg.svg"} alt="" />
                 </div>
                 <div className="member_col">
                     <div className="member_name">{student.name}</div>

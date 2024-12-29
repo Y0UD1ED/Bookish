@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router-dom"
+import { useLocation, useNavigate, useParams } from "react-router-dom"
 import Navbar from "../../components/Navbar"
 import BlueButton from "../../components/buttons/BlueButton"
 import DarkBlueButton from "../../components/buttons/DarkBlueButton"
@@ -14,6 +14,7 @@ import Loading from "../../components/Loading"
 const Shelfs=()=>{
     const navigate=useNavigate()
     const {store}=useContext(Context)
+    const param =useParams()
     const location=useLocation()
     const [show,setShow]=useState(false)
     const [owner,setOwner]=useState(false)
@@ -26,6 +27,9 @@ const Shelfs=()=>{
                 if(location.pathname==PATHS.MYSHELFS){
                     setOwner(true)
                     const res=await store.getMyShelfs();
+                    setShelfs(res)
+                }else{
+                    const res=await store.getStudentShelfs(param.id);
                     setShelfs(res)
                 }
         }catch(e){

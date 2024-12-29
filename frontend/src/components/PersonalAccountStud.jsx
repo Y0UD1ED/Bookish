@@ -67,7 +67,7 @@ const PersonalAccountStud=({data})=>{
                     </div>
                 </div>
                 <ClassesList classes={classes} onClickFunc={()=>navigate(PATHS.MYCLASSES)}/>
-                <ShelfsList shelfs={shelfs} onClickFunc={()=>navigate(PATHS.MYSHELFS)}/>
+                <ShelfsList shelfs={shelfs} onClickFunc={()=>navigate(PATHS.MYSHELFS)} useAdd={true}/>
                 <BooksList useAdd={true} btnText={"Показать все"} btnFunc={()=>navigate(PATHS.MYNOTES)} books={personalBooks} />
                 <ImportantBooksList books={importantBooks} onClickFunc={()=>navigate(PATHS.MYBOOKS)}/>
             </div>

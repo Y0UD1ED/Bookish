@@ -1,11 +1,21 @@
 import { observer } from "mobx-react";
-import {useRef } from "react";
+import { useEffect, useRef } from "react";
 
 const EditTextItem=({title,text,onTextChange})=>{
     const textareaRef = useRef(null);
 
+    useEffect(() => {
+        window.scrollTo(0,0);
+        if (textareaRef.current) {
+            textareaRef.current.style.height = 'auto'; // Сбрасываем высоту
+            textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`; // Устанавливаем высоту в зависимости от содержимого
+        }
+      }, []);
+
+
     const onTextChangeFunc = (value) => {
         onTextChange(value)
+        console.log(text)
         if (textareaRef.current) {
             textareaRef.current.style.height = 'auto'; // Сбрасываем высоту
             textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`; // Устанавливаем высоту в зависимости от содержимого

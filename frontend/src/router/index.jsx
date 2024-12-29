@@ -19,6 +19,7 @@ import Conditions from "../pages/Conditions"
 import PrivacyPolicy from "../pages/PrivacyPolicy"
 import Contacts from "../pages/Contacts"
 import PrivateRoute from "./PrivateRoute"
+import User from "../pages/User"
 
 
 export const PATHS={
@@ -27,6 +28,7 @@ export const PATHS={
     REG: '/reg',
     PASSWORD_RECOVERY: '/password_recovery',
     PERSONAL_ACCOUNT: '/me',
+    USER: '/users/:id',
     EDIT_ACCOUNT: '/edit',
     MYCLASSES: '/me/classes',
     CLASS: '/classes/:id',
@@ -53,6 +55,7 @@ export const router=()=>(
         <Route path={PATHS.REG} element={<Reg/>}/>
         <Route path={PATHS.PASSWORD_RECOVERY} element={<PasswordRecovery/>}/>
         <Route path={PATHS.PERSONAL_ACCOUNT} element={<PersonalAccount/>}/>
+        <Route path={PATHS.USER} element={<User/>}/>
         <Route path={PATHS.EDIT_ACCOUNT} element={<EditAccount/>}/>
         <Route path={PATHS.MYCLASSES} element={<Classes/>}/>
         <Route path={PATHS.CLASS} element={<Class/>}/>

@@ -1,11 +1,34 @@
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import BackButton from "../buttons/BackButton";
 import FuncButton from "../buttons/FuncButton";
 import FuncButtonWithHint from "../buttons/FuncButtonWithHint";
 import RoundImageModal from "../RoundImageModal";
+import { Context } from "../..";
+import Loading from "../Loading";
 
 const AddClassPopup=({isShow,onClose})=>{
     const [name,setName]=useState("")
+    const [file,setFile]=useState(null)
+    const [wait,setWait]=useState(false)
+    const {store}=useContext(Context)
+
+    const createClass=async()=>{
+        try{
+            setWait(true)
+            let image="defaultImage"
+            if(file!=null){
+                image=""
+            }
+            await store.createClass(name,image,file)
+        }catch(e){
+            console.log(e)
+        }finally{
+            if(!store.isError){
+                window.location.reload()
+            }
+            setWait(false)
+        }
+    }
     
           const [src, setSrc] = useState(null);
           
@@ -30,6 +53,11 @@ const AddClassPopup=({isShow,onClose})=>{
                     setModalOpen(true);
                 }
             };
+
+    if(wait){
+        return <Loading/>
+    }
+    
     
     if(isShow){
         return(
@@ -43,6 +71,7 @@ const AddClassPopup=({isShow,onClose})=>{
                                     src={src}
                                     setPreview={setPreview}
                                     setModalOpen={setModalOpen}
+                                    setFile={setFile}
                                 />
                                 <img src={
                                         preview ||
@@ -75,7 +104,7 @@ const AddClassPopup=({isShow,onClose})=>{
                    </div>
                     <div className="button_row">
                         <BackButton onClickFunc={()=>onClose()}/>
-                        <FuncButton btnText={"Создать"} onClickFunc={()=>console.log(name)}/>
+                        <FuncButton btnText={"Создать"} onClickFunc={()=>createClass()}/>
                     </div>
                 </div>
             </div>

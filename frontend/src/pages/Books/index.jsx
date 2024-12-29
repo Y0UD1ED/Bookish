@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import BlueButton from "../../components/buttons/BlueButton";
 import DarkBlueButton from "../../components/buttons/DarkBlueButton";
 import Footer from "../../components/Footer";
@@ -13,8 +13,8 @@ import Loading from "../../components/Loading";
 const Books=()=>{
     const navigate=useNavigate()
     const {store}=useContext(Context)
+    const param =useParams()
     const location=useLocation()
-    const [show,setShow]=useState(false)
     const [wait,setWait]=useState(false)
     const [books,setBooks]=useState([])
     useEffect(() => {
@@ -22,7 +22,10 @@ const Books=()=>{
             try{
                 setWait(true)
                 if(location.pathname==PATHS.MYBOOKS){
-                    const res=await store.getMyBooks();
+                    const res=await store.getMyNotes("important");
+                    setBooks(res)
+                }else{
+                    const res=await store.getStudentNotes(param.id,"important");
                     setBooks(res)
                 }
         }catch(e){
@@ -48,7 +51,6 @@ const Books=()=>{
                             <div className="list_title_text">Заданные книги</div>
                             <div className="list_title_btns">
                                 <BlueButton onClickFunc={()=>navigate(-1)} btnText={"Назад"}/>
-                                <DarkBlueButton onClickFunc={()=>setShow(true)} btnText={"Добавить"}/>
                             </div>
                         </div>
                         <div className="just_line"></div>
@@ -57,7 +59,6 @@ const Books=()=>{
                         {books.map(k=>
                         <BookItem book={k} key={k.id}/>
                         )}
-                        <UploadBooListPopup isShow={show} onClose={()=>setShow(false)}/>
                     </div>
                     </div>
             </div>

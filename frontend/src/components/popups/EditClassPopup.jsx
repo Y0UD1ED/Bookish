@@ -1,16 +1,39 @@
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import BackButton from "../buttons/BackButton";
 import FuncButton from "../buttons/FuncButton";
 import RoundImageModal from "../RoundImageModal";
+import Loading from "../Loading";
+import { Context } from "../..";
+import { API_URL } from "../../api/api";
 
-const EditClassPopup=({isShow,onClose})=>{
-    const [name,setName]=useState("")
-    let bookArr=[]
+const EditClassPopup=({oneClass,isShow,onClose})=>{
+    const [name,setName]=useState(oneClass.name)
+    const [file,setFile]=useState(null)
+    const [wait,setWait]=useState(false)
+    const {store}=useContext(Context)
+
+    const updateClass=async()=>{
+        try{
+            setWait(true)
+            let image="defaultImage"
+            if(file!=null){
+                image=""
+            }
+            await store.updateClass(oneClass.id,name,image,file)
+        }catch(e){
+            console.log(e)
+        }finally{
+            if(!store.isError){
+                window.location.reload()
+            }
+            setWait(false)
+        }
+    }
     
           const [src, setSrc] = useState(null);
           
             // preview
-            const [preview, setPreview] = useState(null);
+            const [preview, setPreview] = useState(API_URL+"/images/"+oneClass.image||null);
           
             // modal state
             const [modalOpen, setModalOpen] = useState(false);
@@ -30,6 +53,10 @@ const EditClassPopup=({isShow,onClose})=>{
                     setModalOpen(true);
                 }
             };
+
+    if(wait){
+        return<Loading/>
+    }
     
     if(isShow){
         return(
@@ -43,6 +70,7 @@ const EditClassPopup=({isShow,onClose})=>{
                                     src={src}
                                     setPreview={setPreview}
                                     setModalOpen={setModalOpen}
+                                    setFile={setFile}
                                 />
                                 <img src={
                                         preview ||
@@ -74,7 +102,7 @@ const EditClassPopup=({isShow,onClose})=>{
                    </div>
                     <div className="button_row">
                         <BackButton onClickFunc={()=>onClose()}/>
-                        <FuncButton btnText={"Сохранить"}/>
+                        <FuncButton btnText={"Сохранить"} onClickFunc={()=>updateClass()} />
                     </div>
                 </div>
             </div>

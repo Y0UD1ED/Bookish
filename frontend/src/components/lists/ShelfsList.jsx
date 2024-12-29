@@ -5,7 +5,7 @@ import AddShelfItem from "../items/AddShelfItem";
 import { useState } from "react";
 import CreateShelfPopup from "../popups/CreateShelfPopup";
 
-const ShelfsList=({shelfs, onClickFunc})=>{
+const ShelfsList=({shelfs, onClickFunc,useAdd})=>{
     const navigate=useNavigate()
     const location=useLocation()
     const [show,setShow]=useState(false)
@@ -24,7 +24,7 @@ const ShelfsList=({shelfs, onClickFunc})=>{
                 {shelfs.map(k=>
                     <ShelfItem shelf={k} key={k.id}/>
                 )}
-                <AddShelfItem onClickFunc={()=>setShow(true)}/>
+                {useAdd&&<AddShelfItem onClickFunc={()=>setShow(true)}/>}
                 <CreateShelfPopup isShow={show} onClose={()=>setShow(false)}/>
             </div>
         </div>

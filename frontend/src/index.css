@@ -105,19 +105,7 @@ input::placeholder{
   cursor: pointer;
 }
 
-.func_hint_btn{
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding-left:21px;
-  border-radius: 30px;
-  text-align: center;
-  font-size: 20px;
-  background: #335696;
-  color: white;
-  cursor: pointer;
-}
+
 
 .input_wrapper{
   display: flex;
@@ -740,6 +728,40 @@ transform-origin: 0 0; /* see note above */
 	height: 0;
 }
  
+.input-file-hint input[type=file] {
+	position: absolute;
+	z-index: -100;
+	opacity: 0;
+	display: block;
+	width: 0;
+	height: 0;
+}
+
+.func_hint_btn{
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 30px;
+  text-align: center;
+  font-size: 20px;
+  background: #335696;
+  color: white;
+}
+
+.input-file-hint{
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding-left:21px;
+  border-radius: 30px;
+  text-align: center;
+  font-size: 20px;
+  background: #335696;
+  color: white;
+  cursor: pointer;
+}
 .errors{
   max-width: 250px;
   font-size: 14px;

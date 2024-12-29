@@ -38,3 +38,41 @@
     flex-direction: column;
     gap: 54px;
 }
+
+.upload_book_item{
+    display: inline;
+    padding: 18px 18px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+
+.upload_book_item:hover{
+    background: #E3EDFF;
+}
+
+.upload_book_item_row{
+    display: inline-flex;
+    gap: 21px
+}
+
+.upload_book_item_img img{
+    width: 155px;
+    height: auto;
+    border-radius: 10px;
+}
+
+.upload_book_item_info_col{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.upload_book_item_info input{
+    min-width: 350px;
+    padding: 6px 10px;
+    font-size: 20px;
+    border: none;
+    background: #F2ECEC;
+    color: #838080;
+}

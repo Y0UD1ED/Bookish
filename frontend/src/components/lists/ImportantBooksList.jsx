@@ -7,6 +7,7 @@ const ImportantBooksList=({books, onClickFunc})=>{
     if(books==undefined){
         books=[]
     }
+
     const location=useLocation()
     return(
         <div className="books_list">

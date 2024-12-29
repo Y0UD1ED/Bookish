@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import ProgressItem from "./ProgressItem";
 import { PATHS } from "../../router";
+import { API_URL } from "../../api/api";
 
 const ProgressBookItem=({book,classId})=>{
     const navigate=useNavigate()
@@ -8,7 +9,7 @@ const ProgressBookItem=({book,classId})=>{
         <div className="progress_book_item">
             <div className="progress_book_item_row">
                 <div className="progress_book_item_img">
-                    <img src="/bookImage.svg" alt="" />
+                    <img src={API_URL+"/images/"+book.image||"/bookImage.svg"} alt="" />
                 </div>
                 <div className="progress_book_item_info">
                     <div className="progress_book_item_info_row">

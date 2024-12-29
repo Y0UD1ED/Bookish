@@ -4,6 +4,9 @@ export default class ShelfService{
     static async myShelfs(){
         return $api.get('/shelfs/my');
     }
+    static async studentShelfs(id){
+        return $api.get(`/shelfs?user=${id}`);
+    }
     static async getShelfById(id){
         return $api.get(`/shelfs/${id}`);
     }

@@ -16,7 +16,7 @@ const CreateShelfPopup=({isShow,onClose})=>{
     const [file,setFile]=useState(null)
     const [notes,setNotes]=useState([])
     const {store}=useContext(Context)
-    let bookArr=[]
+    const [bookArr,setBookArr]=useState([])
 
      useEffect(() => {
         const fetchData=async()=>{
@@ -34,12 +34,12 @@ const CreateShelfPopup=({isShow,onClose})=>{
         if(isShow){
             fetchData()
         }
+        setBookArr([])
     }, [isShow]);
 
           const createShelf=async()=>{
             try{
                 setWait(true)
-                console.log(file)
                 await store.createShelf(name,description,hide,"",file,bookArr)
             }catch(e){
                 console.log(e)
@@ -48,6 +48,7 @@ const CreateShelfPopup=({isShow,onClose})=>{
                     window.location.reload()
                 }
                 setWait(false)
+                setBookArr([])
             }
           }
 
@@ -76,12 +77,12 @@ const CreateShelfPopup=({isShow,onClose})=>{
         };
 
     const addBookInList=(i)=>{
-        bookArr.push(i)
+        setBookArr([...bookArr, i]);
         console.log(bookArr)
     }
 
     const removeBookFromList=(i)=>{
-        bookArr=bookArr.filter(num=>num!=i)
+        setBookArr(l => l.filter(item => item !==i));
         console.log(bookArr)
     }
 

@@ -18,7 +18,7 @@ const EditNote=({note,onClose})=>{
     const navigate=useNavigate()
     const statusOptions=[
         {value: "планирую читать",text:"планирую читать"},
-        {value: "читаю",text:"читаю"},
+        {value: "начал читать",text:"начал читать"},
         {value: "прочитал",text:"прочитал"},
     ]
     const [name,setName]=useState(note.name||"")

@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import BlueButton from "../../components/buttons/BlueButton";
 import DarkBlueButton from "../../components/buttons/DarkBlueButton";
 import Footer from "../../components/Footer";
@@ -14,6 +14,7 @@ import Loading from "../../components/Loading";
 const Notes=()=>{
     const navigate=useNavigate()
     const {store}=useContext(Context)
+    const param=useParams()
     const location=useLocation()
     const [show,setShow]=useState(false)
     const [owner,setOwner]=useState(false)
@@ -25,7 +26,10 @@ const Notes=()=>{
                 setWait(true)
                 if(location.pathname==PATHS.MYNOTES){
                     setOwner(true)
-                    const res=await store.getMyNotes();
+                    const res=await store.getMyNotes("personal");
+                    setBooks(res)
+                }else{
+                    const res=await store.getStudentNotes(param.id,"personal");
                     setBooks(res)
                 }
             }catch(e){

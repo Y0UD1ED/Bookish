@@ -1,9 +1,27 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import BackButton from "../buttons/BackButton";
 import FuncButton from "../buttons/FuncButton";
+import { Context } from "../..";
 
 const LogInClassPopup=({isShow,onClose})=>{
     const [code,setCode]=useState("")
+    const [wait,setWait]=useState(false)
+    const {store}=useContext(Context)
+
+    const logInClass=async()=>{
+        try{
+            setWait(true)
+            await store.logInClass(code)
+        }catch(e){
+            console.log(e)
+        }finally{
+            if(!store.isError){
+                window.location.reload()
+            }
+            setWait(false)
+        }
+    }
+
     if(isShow){
     return(
         <div className="window" onClick={()=>onClose()}>
@@ -19,7 +37,7 @@ const LogInClassPopup=({isShow,onClose})=>{
                 </div>
                 <div className="button_row">
                     <BackButton onClickFunc={()=>onClose()}/>
-                    <FuncButton btnText={"Войти"}/>
+                    <FuncButton btnText={"Войти"} onClickFunc={()=>logInClass()}/>
                 </div>
             </div>
         </div>

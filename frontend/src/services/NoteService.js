@@ -4,6 +4,9 @@ export default class NoteService{
     static async myNotes(type){
         return $api.get(`/notes/my?type=${type}`);
     }
+    static async studentNotes(id,type){
+        return $api.get(`/notes?user=${id}&type=${type}`);
+    }
     static async getNoteById(id){
         return $api.get(`/notes/${id}`);
     }

@@ -41,7 +41,7 @@ const PersonalAccountTeacher=({data})=>{
                         </div>
                     </div>
                 </div>
-                <ClassesList classes={classes} onClickFunc={()=>navigate(PATHS.MYCLASSES)}/>
+                <ClassesList classes={classes} onClickFunc={()=>navigate(PATHS.MYCLASSES)} type="teacher"/>
             </div>
            
         </div>

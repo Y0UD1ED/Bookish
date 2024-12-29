@@ -37,7 +37,22 @@ export default class ClassService{
     static async getClassBookProgressWantToRead(id,bookId){
         return $api.get(`/classes/${id}/books/${bookId}/progress/want_read`);
     }
-    static async loginClass(code){
-        return $api.post('/classes/login',code);
+    static async loginClass(formData){
+        return $api.post('/classes/login',formData)
+    }
+    static async createClass(formData){
+        return $api.post('/classes/create',formData)
+    }
+    static async updateClass(id,formData){
+        return $api.put(`/classes/${id}`,formData)
+    }
+    static async deleteClass(id){
+        return $api.delete(`/classes/${id}`)
+    }
+    static async logoutClass(id){
+        return $api.put(`/classes/${id}/logout`)
+    }
+    static async addBooksInClass(id,books){
+        return $api.post(`/classes/${id}/books`,books)
     }
 }

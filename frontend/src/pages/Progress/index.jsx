@@ -79,6 +79,7 @@ const Progress=()=>{
     return(
         <div className="one_progress">
             <Navbar/>
+            
             <div className="pagecontainer">
             <div className="list_title">
                 <div className="list_title_row">

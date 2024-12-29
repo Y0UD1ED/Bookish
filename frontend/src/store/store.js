@@ -8,6 +8,7 @@ import ShelfService from "../services/ShelfService";
 import axios from 'axios'
 import { API_URL } from "../api/api";
 import Cookies from 'universal-cookie';
+import { th } from "date-fns/locale";
 
 export default class Store{
     user={};
@@ -139,9 +140,9 @@ export default class Store{
 
     async getMyData(){
         try{
-            
             const res=await UserService.me()
             this.setRole(res.data.role)
+            localStorage.setItem("role",res.data.role)
             const {id,name,image,about,notificationCount}=res.data
             this.setUser({id,name,image,about,notificationCount})
             localStorage.setItem("user_id",this.user.id)
@@ -178,6 +179,97 @@ export default class Store{
     async getClassById(id) {
         try {
             const response = await ClassService.getClassById(id);
+            console.log(response.data)
+            return response.data
+        } catch (e) {
+            this.setIsError(true)
+            this.setErrorMessage(e.response ? e.response.data.message : e.message)
+            console.log(e.response.data.message)
+        }
+    }
+
+    async logInClass(code) {
+        try {
+            const formData=new FormData()
+            formData.append("code",code)
+            console.log(code)
+            const response = await ClassService.loginClass(formData);
+            console.log(response.data)
+            return response.data
+        } catch (e) {
+            this.setIsError(true)
+            this.setErrorMessage(e.response ? e.response.data.message : e.message)
+            console.log(e.response.data.message)
+        }
+    }
+
+    async parseBooks(file) {
+        try {
+            const formData=new FormData()
+            formData.append("file",file)
+            const response = await BookService.parseBooks(formData)
+            console.log(response.data)
+            return response.data
+        } catch (e) {
+            this.setIsError(true)
+            this.setErrorMessage(e.response ? e.response.data.message : e.message)
+            console.log(e.response.data.message)
+        }
+    }
+
+    async createClass(name,image,file) {
+        try {
+            const formData=new FormData()
+            if(file!=null){
+                image=""
+            }
+            const jsonData=JSON.stringify({"name":name,
+                "image":image})
+            formData.append("image",file)
+            formData.append("newClass",new Blob([
+                jsonData
+            ], {
+                type: "application/json"
+            }))
+            const response = await ClassService.createClass(formData)
+            console.log(response.data)
+            return response.data
+        } catch (e) {
+            console.log(e)
+            this.setIsError(true)
+            this.setErrorMessage(e.response ? e.response.data.message : e.message)
+            console.log(e.response.data.message)
+        }
+    }
+
+    async updateClass(id,name,image,file) {
+        try {
+            const formData=new FormData()
+            if(file!=null){
+                image=""
+            }
+            const jsonData=JSON.stringify({"name":name,
+                "image":image})
+            formData.append("image",file)
+            formData.append("newClass",new Blob([
+                jsonData
+            ], {
+                type: "application/json"
+            }))
+            const response = await ClassService.updateClass(id,formData)
+            console.log(response.data)
+            return response.data
+        } catch (e) {
+            console.log(e)
+            this.setIsError(true)
+            this.setErrorMessage(e.response ? e.response.data.message : e.message)
+            console.log(e.response.data.message)
+        }
+    }
+
+    async addBooksInClass(classId,books) {
+        try {
+            const response = await ClassService.addBooksInClass(classId,books)
             console.log(response.data)
             return response.data
         } catch (e) {
@@ -266,6 +358,19 @@ export default class Store{
             console.log(e.response.data.message)
         }
     }
+
+    async getStudentShelfs(id) {
+        try {
+            const response = await ShelfService.studentShelfs(id);
+            console.log(response.data)
+            return response.data
+        } catch (e) {
+            this.setIsError(true)
+            this.setErrorMessage(e.response ? e.response.data.message : e.message)
+            console.log(e.response.data.message)
+        }
+    }
+
     async getSheflById(id) {
         try {
             const response = await ShelfService.getShelfById(id);
@@ -282,6 +387,18 @@ export default class Store{
     async getMyNotes(type) {
         try {
             const response = await NoteService.myNotes(type);
+            console.log(response.data)
+            return response.data
+        } catch (e) {
+            this.setIsError(true)
+            this.setErrorMessage(e.response ? e.response.data.message : e.message)
+            console.log(e.response.data.message)
+        }
+    }
+
+    async getStudentNotes(id,type) {
+        try {
+            const response = await NoteService.studentNotes(id,type);
             console.log(response.data)
             return response.data
         } catch (e) {
@@ -335,6 +452,7 @@ export default class Store{
             console.log(response.data)
             return response.data
         } catch (e) {
+            console.log(e)
             this.setIsError(true)
             this.setErrorMessage(e.response ? e.response.data.message : e.message)
             console.log(e.response.data.message)
@@ -393,6 +511,29 @@ export default class Store{
         }
     }
 
+    async deleteClassById(id) {
+        try {
+            const response = await ClassService.deleteClass(id);
+            return
+        } catch (e) {
+            this.setIsError(true)
+            this.setErrorMessage(e.response ? e.response.data.message : e.message)
+            console.log(e.response.data.message)
+        }
+    }
+
+    async logoutClassById(id) {
+        try {
+            const response = await ClassService.logoutClass(id);
+            return
+        } catch (e) {
+            this.setIsError(true)
+            this.setErrorMessage(e.response ? e.response.data.message : e.message)
+            console.log(e.response.data.message)
+        }
+    }
+
+
     async createShelf(name,description,isHidden,image,file,books) {
         try {
             const formData=new FormData()
@@ -404,6 +545,7 @@ export default class Store{
                 "isHidden":isHidden,
                 "image":image,
                 "books":books})
+            console.log(books)
             formData.append("image",file)
             formData.append("shelf",new Blob([
                 jsonData
@@ -453,6 +595,18 @@ export default class Store{
         try {
             await ShelfService.addNotesInShelf(id,books);
             return 
+        } catch (e) {
+            this.setIsError(true)
+            this.setErrorMessage(e.response ? e.response.data.message : e.message)
+            console.log(e.response.data.message)
+        }
+    }
+
+    async getStudentById(id) {
+        try {
+            const response = await UserService.getStudentById(id);
+            console.log(response.data)
+            return response.data
         } catch (e) {
             this.setIsError(true)
             this.setErrorMessage(e.response ? e.response.data.message : e.message)

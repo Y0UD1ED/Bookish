@@ -10,11 +10,14 @@ import { useContext, useEffect, useState } from "react";
 import { PATHS } from "../../router";
 import { Context } from "../..";
 import Loading from "../../components/Loading";
+import AddClassItem from "../../components/items/AddClassItem";
+import AddClassPopup from "../../components/popups/AddClassPopup";
 
 const Classes=()=>{
     const navigate=useNavigate()
     const {store}=useContext(Context)
     const location=useLocation()
+    const role=localStorage.getItem("role")
     const [classes,setClasses]=useState([])
     const [wait,setWait]=useState(false)
     const [show,setShow]=useState(false)
@@ -48,7 +51,7 @@ const Classes=()=>{
                             <div className="list_title_text">Мои классы</div>
                             <div className="list_title_btns">
                                 <BlueButton onClickFunc={()=>navigate(-1)} btnText={"Назад"}/>
-                                <DarkBlueButton onClickFunc={1} btnText={"Войти в класс"}/>
+                                <DarkBlueButton onClickFunc={()=>setShow(true)} btnText={role=="student"&&"Войти в класс"||"Создать класс"}/>
                             </div>
                         </div>
                         <div className="just_line"></div>
@@ -57,8 +60,10 @@ const Classes=()=>{
                         {classes.map(k=>
                             <ClassItem oneClass={k} key={k.id}/>
                         )}
-                        <LogInClassItem onClickFunc={()=>setShow(true)}/>
-                        <LogInClassPopup isShow={show} onClose={()=>setShow(false)}/>
+                        {role=="student"&&<LogInClassItem onClickFunc={()=>setShow(true)}/>}
+                        {role=="student"&&<LogInClassPopup isShow={show} onClose={()=>setShow(false)}/>}
+                        {role=="teacher"&&<AddClassItem onClickFunc={()=>setShow(true)}/>}
+                        {role=="teacher"&&<AddClassPopup isShow={show} onClose={()=>setShow(false)}/>}
                     </div>
                 </div>
             </div>
