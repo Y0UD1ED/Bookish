@@ -63,6 +63,16 @@ export default class Store{
             console.log(e.response.data.message)
         }
     }
+    async registration(firstName,lastName,mail,role,password,passwordRepeat) {
+        try {
+            const response = await AuthService.reg(firstName,lastName,mail,role,password,passwordRepeat);
+            console.log(response)
+        } catch (e) {
+            this.setIsError(true)
+            this.setErrorMessage(e.response ? e.response.data.message : e.message)
+            console.log(e.response.data.message)
+        }
+    }
 
     async logout() {
         try {

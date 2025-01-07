@@ -17,7 +17,7 @@ const ProgressBookList=({books,onUpload})=>{
                     <div className="list_title_text">Заданные книги</div>
                     <div className="list_title_btns">
                        <BlueButton btnText={"Назад"} onClickFunc={()=>navigate(-1)}/>
-                        {role&&<DarkBlueButton btnText={"Добавить книгу"} onClickFunc={()=>setShow(true)}/>}
+                        {role=="teacher"&&<DarkBlueButton btnText={"Добавить книгу"} onClickFunc={()=>setShow(true)}/>}
                     </div>
                 </div>
                 <div className="just_line"></div>

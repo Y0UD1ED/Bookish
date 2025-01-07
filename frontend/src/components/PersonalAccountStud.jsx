@@ -11,6 +11,7 @@ import { Context } from '..';
 import { observer } from 'mobx-react';
 import Loading from './Loading';
 import { API_URL } from '../api/api';
+import DropdownMenu from './DropdownMenu';
 
 const PersonalAccountStud=({data})=>{
     const { store } = useContext(Context);
@@ -55,6 +56,9 @@ const PersonalAccountStud=({data})=>{
                                 <div className="object_name">{store.user.name}</div>
                                 <div className="object_about">{store.user.about||"О себе"}</div>
                             </div>
+                        </div>
+                        <div className="mobile700">
+                            <DropdownMenu btns={[ {btnText:'Редактировать профиль', onClickFunc:()=>navigate(PATHS.EDIT_ACCOUNT)},{btnText:'Выйти',onClickFunc:()=>logout()}]}/>
                         </div>
                         <div className="object_btns">
                             <div className="object_btns_col">

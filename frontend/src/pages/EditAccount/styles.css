@@ -78,3 +78,12 @@
     display: flex;
     gap: 34px;
 }
+
+@media (max-width:700px) {
+    .edit_account_input_item input{
+        width: 225px;
+    }
+    .edit_account_inputs_col{
+        margin-left: -40px;
+    }
+}

@@ -40,7 +40,7 @@ const CreateShelfPopup=({isShow,onClose})=>{
           const createShelf=async()=>{
             try{
                 setWait(true)
-                await store.createShelf(name,description,hide,"",file,bookArr)
+                await store.createShelf(name,description,hide,"defaultShelfImage.png",file,bookArr)
             }catch(e){
                 console.log(e)
             }finally{
@@ -107,7 +107,7 @@ const CreateShelfPopup=({isShow,onClose})=>{
                                 />
                                 <img src={
                                         preview ||
-                                        "/userAvatar.jpg"
+                                        "/shelfImage.png"
                                     } alt="" />
                          <div className="image_cropper">
                         <a href="/" onClick={handleInputClick}>

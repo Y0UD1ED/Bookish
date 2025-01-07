@@ -55,4 +55,11 @@
   .reg_form input{
     padding: 12px 41px;
   }
-  
+  @media (max-width:700px) {
+    .authContainer{
+      justify-content: center;
+    }
+    .auth_form{
+      padding: 33px;
+    }
+  }

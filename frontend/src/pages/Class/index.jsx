@@ -17,6 +17,7 @@ import DeleteClassPopup from "../../components/popups/DeleteClassPopup";
 import DarkBlueButton from "../../components/buttons/DarkBlueButton";
 import EditClassPopup from "../../components/popups/EditClassPopup";
 import CopyToClipboard from "react-copy-to-clipboard";
+import DropdownMenu from "../../components/DropdownMenu";
 
 const Class=()=>{
     const { pathname } = useLocation();
@@ -95,7 +96,9 @@ const Class=()=>{
                                     {isCopied ? <span style={{color: '#335696'}}>Скопировано!</span> : null}    
                                 </div>
                                 </CopyToClipboard>
-                                <DeleteButton btnText={role=="student"&&'Выйти из класса'||"Удалить класс"} onClickFunc={()=>setExit(true)}/>
+                                <div className="delete_wrp">
+                                    <DeleteButton btnText={role=="student"&&'Выйти из класса'||"Удалить класс"} onClickFunc={()=>setExit(true)}/>
+                                </div>
                             </div>
                         </div>
                         <div className="object_btns">
@@ -103,6 +106,10 @@ const Class=()=>{
                                 <BlueButton btnText={'Назад'} onClickFunc={()=>navigate(-1)}/>
                                 {role=="teacher"&&<BlueButton btnText={"Редактировать класс"} onClickFunc={()=>setEdit(true)}/>}
                             </div>
+                        </div>
+                        <div className="mobile700">
+                            {role=="teacher"&&<DropdownMenu btns={[ {btnText:'Редактировать класс', onClickFunc:()=>setEdit(true)},{btnText:'Удалить класс',onClickFunc:()=>setExit(true)}]}/>}
+                            {role=="student"&&<DropdownMenu btns={[ {btnText:'Выйти из класса',onClickFunc:()=>setExit(true)}]}/>}
                         </div>
                     </div>
                 </div>

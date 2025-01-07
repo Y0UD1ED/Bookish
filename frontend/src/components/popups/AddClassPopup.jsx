@@ -15,7 +15,7 @@ const AddClassPopup=({isShow,onClose})=>{
     const createClass=async()=>{
         try{
             setWait(true)
-            let image="defaultImage"
+            let image="defaultClassImage.png"
             if(file!=null){
                 image=""
             }

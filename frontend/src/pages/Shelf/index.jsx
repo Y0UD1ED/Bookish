@@ -11,6 +11,7 @@ import DeleteShelfPopup from "../../components/popups/DeleteShelfPopup";
 import { Context } from "../..";
 import Loading from "../../components/Loading";
 import { API_URL } from "../../api/api";
+import DropdownMenu from "../../components/DropdownMenu";
 
 const Shelf=()=>{
     const { pathname } = useLocation();
@@ -68,6 +69,9 @@ const Shelf=()=>{
                                 {owner&&<BlueButton btnText={'Редактировать полку'} onClickFunc={()=>setEdit(true)}/>}
                                 <BlueButton btnText={'Назад'} onClickFunc={()=>navigate(-1)}/>
                             </div>
+                        </div>
+                        <div className="mobile700">
+                            {owner&&<DropdownMenu btns={[ {btnText:'Редактировать полку', onClickFunc:()=>setEdit(true)},{btnText:'Удалить полку',onClickFunc:()=>setDel(true)}]}/>}
                         </div>
                     </div>
                 </div>

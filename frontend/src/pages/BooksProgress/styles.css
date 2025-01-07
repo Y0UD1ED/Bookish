@@ -76,3 +76,14 @@
     background: #F2ECEC;
     color: #838080;
 }
+
+@media (max-width:700px) {
+    .progress_book_item_row{
+        align-items: center;
+        flex-direction: column;
+    }
+    .progress_book_item_info_row{
+        flex-direction: column;
+        text-align: center;
+    }
+}

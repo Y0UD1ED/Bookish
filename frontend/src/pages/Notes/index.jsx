@@ -53,7 +53,7 @@ const Notes=()=>{
                             <div className="list_title_text">Мои книги</div>
                             <div className="list_title_btns">
                                 <BlueButton onClickFunc={()=>navigate(-1)} btnText={"Назад"}/>
-                                {owner&&<DarkBlueButton onClickFunc={1} btnText={"Добавить"}/>}
+                                {owner&&<DarkBlueButton onClickFunc={()=>setShow(true)} btnText={"Добавить"}/>}
                             </div>
                         </div>
                         <div className="just_line"></div>

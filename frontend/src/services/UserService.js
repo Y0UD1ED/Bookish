@@ -12,4 +12,8 @@ export default class UserService{
     static async updateMe(formData){
         return $api.put('/users/me/update',formData);
     }
+
+    static async getStudentById(id){
+        return $api.get(`/users/${id}`,id);
+    }
 }

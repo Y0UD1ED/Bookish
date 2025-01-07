@@ -42,7 +42,7 @@ const AddPersonalBookPopup=({isShow,onClose})=>{
     const createNote=async()=>{
         try{
             setWait(true)
-            let image="defaultImage"
+            let image="defaultBookImage.png"
             if(file!=null){
                 image=""
             }

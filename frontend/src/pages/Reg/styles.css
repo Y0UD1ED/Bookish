@@ -6,20 +6,7 @@
     align-items: center;
     padding-top: 40px;
   }
-  
-  .auth_form{
-    display: inline-flex;
-    flex-direction: column;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-    border-radius: 42px;
-    gap: 30px;
-    padding: 33px 73px 43px 73px;
-    background: white;
-    color: black;
-    font-size: 27px;
-  }
+
 
   .auth_form a{
     margin-top: 20px;
@@ -58,3 +45,11 @@
     padding: 12px 41px;
   }
  
+  @media (max-width:700px) {
+    .regContainer{
+      justify-content: center;
+    }
+    .reg_form{
+      padding: 33px;
+    }
+  }
