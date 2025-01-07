@@ -1,0 +1,54 @@
+
+
+  .mainContainer{
+    padding-top: 50px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 250px;
+    /* Задаем высоту и ширину */
+  align-items: center;
+  justify-content: center; /* Центрируем по вертикали */
+  color: white;
+  }
+  
+  .slogan{
+    font-size: 27px;
+    cursor:default;
+  }
+  
+  
+  
+  .logo img{
+    width: 476px;
+    height: auto;
+  }
+
+  @media (max-width:700px) {
+    .logo{
+      display: flex;
+      justify-content: center;
+    }
+    .slogan{
+      text-align: center;
+    }
+    .logo img{
+      width: 300px;
+      height: auto;
+    }
+  }
+  
+.login_btn{
+    display: inline-block;
+    padding: 17px 52px;
+    margin-bottom: 17px;
+    border-radius: 50px;
+    background: white;
+    color: black;
+  }
+  
+
+  .reg_btn a{
+
+    color: white;
+  }

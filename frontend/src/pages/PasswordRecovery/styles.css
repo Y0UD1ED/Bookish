@@ -1,0 +1,47 @@
+
+
+
+.recoveryContainer{
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.recovery_form{
+    display: inline-flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    border-radius: 42px;
+    padding: 33px 36px 51px 36px;
+    background: white;
+    color: black;
+    font-size: 27px;
+  }
+
+  .subtittle{
+    max-width: 350px;
+    font-size: 17px;
+    margin-top: 12px;
+    line-height:normal;
+    margin-bottom: 18px;
+  }
+
+  .title_with_sub{
+    margin: 0;
+  }
+
+  .recovery_form input{
+    margin-bottom: 41px;
+  }
+
+  
+  .title_label{
+    margin-top: 6px;
+    font-size: 20px;
+    margin-bottom: 51px;
+  }
+

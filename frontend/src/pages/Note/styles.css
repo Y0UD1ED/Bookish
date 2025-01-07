@@ -1,0 +1,130 @@
+.text_item{
+    padding-bottom: 35px;
+}
+
+.text_item_txt{
+    padding-top: 18px;
+    padding-left: 10px;
+    font-size: 18px;
+    line-height: normal;
+}
+
+.note_info{
+    padding: 28px 0px 54px 0px;
+    font-size: 20px;
+}
+.note_info_raw{
+    display: flex;
+    gap: 45px;
+}
+
+.note_info_img img{
+    width: 200px;
+    height: auto;
+    border-radius: 10px;
+}
+
+.note_info_text{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.note_info_text_raw{
+    display: flex;
+    gap: 18px;
+}
+
+.note_info_author{
+    color: #968C8C;
+}
+
+.note_info_warning_raw{
+    display: flex;
+    text-align: center;
+    align-items: center;
+    margin-left: -5px;
+    font-size: 18px;
+    color: red;
+}
+
+.note_info_warning_raw img{
+    width: 35px;
+    height: auto;
+}
+
+.note_info_warning_hint_img{
+    cursor: pointer;
+}
+
+.note_info_warning_img{
+    cursor: pointer;
+}
+
+.note_info_property{
+    display: flex;
+    align-items: center;
+    text-align: center;
+    gap: 5px;
+}
+
+.note_info_text input{
+    padding: 5px 20px;
+    background: #E3EDFF;
+    border: none;
+}
+
+.note_info_text select{
+    padding: 5px 20px;
+    background: #E3EDFF;
+    border-radius: 10px;
+    border: none;
+}
+
+.edit_text_item_txt{
+    width: 100%;
+    min-height: auto;
+    resize: none;
+    overflow-y: auto;
+    margin: 18px 0px;
+    padding: 20px 25px;
+    background: #E3EDFF;
+    border-radius: 10px;
+}
+
+.note_info_property_selector{
+    font-size: 18px;
+  }
+
+@media (max-width:700px) {
+    .note_info_img img{
+        width: 150px;
+    }
+    .note_info{
+        font-size: 16px;
+    }
+    .note_info_text_raw{
+        flex-direction: column;
+    }
+    .note_info_text select{
+       width: 200px;
+    }
+    .note_info_property{
+        flex-direction: column;
+        align-items: start;
+    }
+    .note_info_text input{
+        width: 200px;
+        font-size: 16px
+    };
+    .note_info_text_raw{
+        gap: 5px;
+        flex-direction: column;
+    }
+    .note_info_property{
+        text-align: left;
+    }
+    .input-file span{
+        padding: 10px 25px !important;
+    }
+}

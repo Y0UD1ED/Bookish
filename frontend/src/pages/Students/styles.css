@@ -1,0 +1,60 @@
+.member_list{
+    padding-top: 18px;  
+    padding-right: 90px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.class_member_item{
+    padding: 13px 15px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.class_member_item:hover{
+    background: #E3EDFF;
+}
+
+.member_row{
+    display: flex;
+    gap: 25px;
+    font-size: 20px
+}
+
+.member_col{
+    width: 100%;
+}
+
+.member_progress_item{
+    font-size: 14px;
+    flex: 0 0 30%;
+}
+
+.member_img img{
+    width: 83px;
+    height: auto;
+    border-radius: 50%;
+}
+
+.member_progress_row{
+    display: flex;
+    padding-top: 20px;
+    justify-content: space-between;
+    width: 100%;
+    gap: 21px;
+}
+
+
+.member_progress_default_bar{   
+    height: 18px;
+    border-radius: 14px;
+    background: #E9E9E9;
+}
+
+
+.member_progress_col{
+    display: flex;
+    flex-direction: column;
+    gap:9px
+}

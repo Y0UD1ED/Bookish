@@ -1,0 +1,55 @@
+
+.authContainer{
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 40px;
+  }
+
+
+  .auth_form a{
+    margin-top: 20px;
+  }
+
+  
+
+.regContainer{
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+  }
+  
+  .reg_form{
+    display: inline-flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    border-radius: 42px;
+    gap: 20px;
+    padding: 20px 73px 30px 73px;
+    background: white;
+    color: black;
+    font-size: 27px;
+  }
+  
+  .reg_form a{
+    text-decoration: underline;
+  }
+  
+  .reg_form input{
+    padding: 12px 41px;
+  }
+ 
+  @media (max-width:700px) {
+    .regContainer{
+      justify-content: center;
+    }
+    .reg_form{
+      padding: 33px;
+    }
+  }

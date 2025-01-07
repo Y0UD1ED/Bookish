@@ -1,0 +1,57 @@
+.progress-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 31px;
+    width: 125px;
+    height: 125px;
+    border-radius: 50%;
+  background: radial-gradient(closest-side, white 69%, transparent 70% 100%);
+  }
+
+
+.progress_list_title{
+    padding-bottom: 8px;
+  }
+
+
+  .progress_item{
+    cursor: pointer;
+    border-radius: 10px;
+  }
+
+  .progress_item a{
+    font-size: 14px;
+  }
+  
+  .progress_item_col{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px 6px 3px 6px;
+    gap: 7px;
+  }
+  
+  .progress_item:hover{
+    background: #E3EDFF;
+  }
+  
+  .progress_item_name{
+    max-width: 125px;
+    text-align: center;
+  }
+  
+
+.object_copyboard{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+.object_copy_code{
+  font-weight: bold;
+}
+.object_copy_img img{
+  width: 25px;
+  height: auto;
+}

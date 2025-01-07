@@ -1,0 +1,19 @@
+.conditions_text{
+    line-height: normal;
+    font-size: 18px;
+}
+.condition_title{
+    font-size: 27px;
+    text-align: center;
+    padding-bottom: 33px;
+}
+
+.condition_subtitle{
+    font-size: 27px;
+    margin-top: 15px;
+}
+
+.condition_bold{
+    font-weight: bold;
+    margin-top: 10px;
+}
